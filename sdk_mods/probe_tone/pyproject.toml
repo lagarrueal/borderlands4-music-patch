@@ -1,0 +1,11 @@
+[project]
+name = "ProbeTone"
+version = "1.5"
+authors = [{ name = "alexa" }]
+description = "Loads a custom-cooked USoundWave from a modded IoStore container and plays it, to settle whether BL4's native UE5 mixer produces sound."
+
+[tool.sdkmod]
+name = "Probe Tone"
+version = "1.5"
+license = { name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
+coop_support = "ClientSide"

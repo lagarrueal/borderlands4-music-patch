@@ -1,0 +1,14 @@
+# build output - rebuildable from cook/ (see CLAUDE.md)
+build/
+*.pak
+*.ucas
+*.utoc
+
+# generated test fixture - make it with cook/make_wav.py
+cook/ProbeTone.wav
+
+# UE project working dirs, if the project is ever moved in-tree
+Saved/
+Intermediate/
+DerivedDataCache/
+__pycache__/

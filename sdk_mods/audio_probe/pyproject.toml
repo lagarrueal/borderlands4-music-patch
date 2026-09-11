@@ -1,0 +1,11 @@
+[project]
+name = "AudioProbe"
+version = "1.0"
+authors = [{ name = "alexa" }]
+description = "Read-only diagnostic. Determines whether BL4's native UE5 audio mixer is live and usable, which decides if a custom music mod can play its own tracks in-engine."
+
+[tool.sdkmod]
+name = "Audio Probe"
+version = "1.0"
+license = { name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
+coop_support = "ClientSide"

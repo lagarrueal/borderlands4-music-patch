@@ -1,0 +1,364 @@
+# BL4 music system
+
+## 1. which music packages are resident right now
+  LOADED   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_CTY
+  LOADED   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_GR
+  LOADED   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_MNT
+  LOADED   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_SH
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_ElpisP
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Fortress_GL_POI
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Fortress_Mnt_POI
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Fortress_SL_POI
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Fortress_UpperCity_POI
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Intro_Ambiance
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Intro_Combat
+  absent   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Vault
+  LOADED   /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_WorldPZones
+  absent   /Game/GameData/Audio/Music/Moments/Moment_Mus_Intro_100_FindTheStash
+  absent   /Game/GameData/Audio/Music/Moments/Moment_Mus_Intro_110_PossessedPrisoner
+  LOADED   /Game/GameData/Audio/Design/WorldPainterLayers/SymphonicAmbient/World_P/WPLayer_Amb_WorldP_Biome_Grasslands
+  LOADED   /Game/GameData/Audio/Design/WorldPainterLayers/Radio/WPLayer_Radio
+  absent   /Game/DLC/Cowbell/GameData/Audio/Music/MusLayer_CowbellCombat
+  absent   /Game/DLC/Cowbell/GameData/Audio/Music/MusLayer_CowbellAmbient
+  absent   /Game/DLC/Cello/GameData/Audio/MusicLayers/MusLayer_CelloAmbiance
+  absent   /Game/DLC/Banjo/GameData/Audio/Music/WPL_BanjoAmbientMusic
+
+7 of 21 resident
+
+
+## 2. contents of the resident ones
+
+### /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_CTY
+  1 object(s)
+
+  [OakWorldPainterLayer_MusicZone] /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_CTY.WPLayer_Mus_Ambiance_CTY
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.POI.none'}, Guid: {A: 1676214141, B: 1247828211, C: 122064261, D: 866568439}, OnActivation: {Name: 'None', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_ambiance_zone_CTY:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.POI.deadzone'}, Guid: {A: -60115955, B: 1187028161, C:
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.POI.none', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: 1676214141, B: 1247828211, C: 122064261, D: 866568439}}, {Name: 'Music.POI.deadzone', Color: {B: 246, G: 103, R: 0, A: 255}, Guid: {A: -60115955, B: 1187028161, C: -1137281638, D: 1981594554}}, {Name: 'Music.POI.City.CityWalls', Color: {B: 0, G: 0, R: 255, A: 255}, Guid: {A: -1526716867, B: 1099656360, C: -2002729035, D: 173
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+### /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_GR
+  1 object(s)
+
+  [OakWorldPainterLayer_MusicZone] /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_GR.WPLayer_Mus_Ambiance_GR
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.POI.none'}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}, OnActivation: {Name: 'None', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_ambience_zone_GR:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.POI.deadzone'}, Guid: {A: -194740033, B: 1247369897, C:
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.POI.none', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}}, {Name: 'Music.POI.deadzone', Color: {B: 249, G: 137, R: 0, A: 255}, Guid: {A: -194740033, B: 1247369897, C: -1943635044, D: -1685726921}}, {Name: 'Music.POI.Grasslands.FirstTower', Color: {B: 83, G: 177, R: 244, A: 255}, Guid: {A: 524900595, B: 1217250204, C: -16292893
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+### /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_MNT
+  1 object(s)
+
+  [OakWorldPainterLayer_MusicZone] /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_MNT.WPLayer_Mus_Ambiance_MNT
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.POI.none'}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}, OnActivation: {Name: 'None', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_ambiance_zone_MNT:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.POI.deadzone'}, Guid: {A: -111833349, B: 1328461263, C
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.POI.none', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}}, {Name: 'Music.POI.deadzone', Color: {B: 192, G: 135, R: 0, A: 255}, Guid: {A: -111833349, B: 1328461263, C: 156004014, D: 2030769984}}, {Name: 'Music.POI.Mountains.WelcomeToMountains', Color: {B: 255, G: 174, R: 0, A: 255}, Guid: {A: 926788254, B: 1151249413, C: -15057
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+### /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_SH
+  1 object(s)
+
+  [OakWorldPainterLayer_MusicZone] /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_SH.WPLayer_Mus_Ambiance_SH
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.POI.none'}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}, OnActivation: {Name: 'None', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_ambiance_zone_SH:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.POI.deadzone'}, Guid: {A: -809596610, B: 1298238702, C:
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.POI.none', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}}, {Name: 'Music.POI.deadzone', Color: {B: 234, G: 132, R: 161, A: 255}, Guid: {A: -809596610, B: 1298238702, C: -1370133855, D: -363208870}}, {Name: 'Music.POI.MUTE', Color: {B: 191, G: 207, R: 255, A: 255}, Guid: {A: -1845471083, B: 1337551447, C: 828108440, D: -1427534
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+### /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_WorldPZones
+  1 object(s)
+
+  [OakWorldPainterLayer_MusicZone] /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_WorldPZones.WPLayer_Mus_WorldPZones
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.Zone.Default'}, Guid: {A: -2063915944, B: 1263564521, C: -2098754648, D: -1356724311}, OnActivation: {Name: 'Default', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_biome:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.Zone.Grasslands'}, Guid: {A: 1772393264, B: 1150018881
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.Zone.Default', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: -2063915944, B: 1263564521, C: -2098754648, D: -1356724311}}, {Name: 'Music.Zone.Grasslands', Color: {B: 36, G: 163, R: 0, A: 255}, Guid: {A: 1772393264, B: 1150018881, C: -513569150, D: -1519760687}}, {Name: 'Music.Zone.Mountains', Color: {B: 212, G: 97, R: 78, A: 255}, Guid: {A: -1142018564, B: 1213690630, C: -47675066
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+### /Game/GameData/Audio/Design/WorldPainterLayers/SymphonicAmbient/World_P/WPLayer_Amb_WorldP_Biome_Grasslands
+  1 object(s)
+
+  [OakWorldPainterLayer_AmbientAudio] /Game/GameData/Audio/Design/WorldPainterLayers/SymphonicAmbient/World_P/WPLayer_Amb_WorldP_Biome_Grasslands.WPLayer_Amb_WorldP_Biome_Grasslands
+      ArrayProperty        AmbientAudioZones = [{Tag: {TagName: 'Audio.Ambient.Global.Symphonic.Default'}, AmbientAudioSection: {Name: 'GL_Default_Empty', Conditions: [], actions: [], Children: []}, Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Tag: {TagName: 'Audio.Ambient.Grasslands.OpenFieldGreen.Symphonic.Exterior'}, AmbientAudioSection: {Name: 'GL_OpenFieldGreen', Conditions
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Audio.Ambient.Global.Symphonic.Default', Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Name: 'Audio.Ambient.Grasslands.OpenFieldGreen.Symphonic.Exterior', Color: {B: 0, G: 222, R: 20, A: 255}, Guid: {A: -1549973949, B: 1140285285, C: -981534300, D: 1529631588}}, {Name: 'Audio.Ambient.Grasslands.OpenFieldDry.Symphonic.Exterio
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_AmbientAudio'
+
+### /Game/GameData/Audio/Design/WorldPainterLayers/Radio/WPLayer_Radio
+  1 object(s)
+
+  [OakWorldPainterLayer_RadioStation] /Game/GameData/Audio/Design/WorldPainterLayers/Radio/WPLayer_Radio.WPLayer_Radio
+      ArrayProperty        RadioStationZones = [{Tag: {TagName: 'Audio.Radio.Mountains'}, Guid: {A: 808673321, B: 1100470995, C: -196344437, D: 1695697477}, RadioNameTag: FGbxDefPtr('Mountains_DJ', 'GbxDialogNameTagDef', None), Color: {B: 252, G: 0, R: 13, A: 255}}, {Tag: {TagName: 'Audio.Radio.Grasslands'}, Guid: {A: 286583145, B: 1340840440, C: -963747682, D: -22960953}, RadioNameTag: FGbxDefPtr('Grasslands_DJ', 'GbxDialogNameTagDef', None),
+      FloatProperty        CellSize = 10000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Audio.Radio.Mountains', Color: {B: 252, G: 0, R: 13, A: 255}, Guid: {A: 808673321, B: 1100470995, C: -196344437, D: 1695697477}}, {Name: 'Audio.Radio.Grasslands', Color: {B: 52, G: 250, R: 85, A: 255}, Guid: {A: 286583145, B: 1340840440, C: -963747682, D: -22960953}}, {Name: 'Audio.Radio.Shatterlands', Color: {B: 41, G: 138, R: 235, A: 255}, Guid: {A: 2094806245, B: 1301820904, C: -815773
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_RadioStation'
+
+
+## 3. Gearbox audio classes: do they exist, any instances?
+
+### OakWorldPainterLayer_MusicZone: 5 live instance(s)
+  properties:
+    ArrayProperty        MusicZones
+
+  instance /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_CTY.WPLayer_Mus_Ambiance_CTY
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.POI.none'}, Guid: {A: 1676214141, B: 1247828211, C: 122064261, D: 866568439}, OnActivation: {Name: 'None', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_ambiance_zone_CTY:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.POI.deadzone'}, Guid: {A: -60115955, B: 1187028161, C:
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.POI.none', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: 1676214141, B: 1247828211, C: 122064261, D: 866568439}}, {Name: 'Music.POI.deadzone', Color: {B: 246, G: 103, R: 0, A: 255}, Guid: {A: -60115955, B: 1187028161, C: -1137281638, D: 1981594554}}, {Name: 'Music.POI.City.CityWalls', Color: {B: 0, G: 0, R: 255, A: 255}, Guid: {A: -1526716867, B: 1099656360, C: -2002729035, D: 173
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+  instance /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_Ambiance_MNT.WPLayer_Mus_Ambiance_MNT
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.POI.none'}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}, OnActivation: {Name: 'None', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_ambiance_zone_MNT:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.POI.deadzone'}, Guid: {A: -111833349, B: 1328461263, C
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.POI.none', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: -1976484213, B: 1257657981, C: -10321511, D: 91432558}}, {Name: 'Music.POI.deadzone', Color: {B: 192, G: 135, R: 0, A: 255}, Guid: {A: -111833349, B: 1328461263, C: 156004014, D: 2030769984}}, {Name: 'Music.POI.Mountains.WelcomeToMountains', Color: {B: 255, G: 174, R: 0, A: 255}, Guid: {A: 926788254, B: 1151249413, C: -15057
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+  instance /Game/GameData/Audio/Music/WorldPaintLayers/WPLayer_Mus_WorldPZones.WPLayer_Mus_WorldPZones
+      ArrayProperty        MusicZones = [{Tag: {TagName: 'Music.Zone.Default'}, Guid: {A: -2063915944, B: 1263564521, C: -2098754648, D: -1356724311}, OnActivation: {Name: 'Default', Conditions: [], actions: [WrappedInlineStruct({WwiseSwitch: FGbxDefPtr('Music.mus_biome:default', 'WwiseSwitchDef', None)})], Children: []}, Color: {B: 50, G: 50, R: 50, A: 255}}, {Tag: {TagName: 'Music.Zone.Grasslands'}, Guid: {A: 1772393264, B: 1150018881
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Music.Zone.Default', Color: {B: 50, G: 50, R: 50, A: 255}, Guid: {A: -2063915944, B: 1263564521, C: -2098754648, D: -1356724311}}, {Name: 'Music.Zone.Grasslands', Color: {B: 36, G: 163, R: 0, A: 255}, Guid: {A: 1772393264, B: 1150018881, C: -513569150, D: -1519760687}}, {Name: 'Music.Zone.Mountains', Color: {B: 212, G: 97, R: 78, A: 255}, Guid: {A: -1142018564, B: 1213690630, C: -47675066
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_MusicZone'
+
+### OakWorldPainterLayer_AmbientAudio: 4 live instance(s)
+  properties:
+    ArrayProperty        AmbientAudioZones
+
+  instance /Game/GameData/Audio/Design/WorldPainterLayers/SymphonicAmbient/World_P/WPLayer_Amb_FortressMountainsP_Interior.WPLayer_Amb_FortressMountainsP_Interior
+      ArrayProperty        AmbientAudioZones = [{Tag: {TagName: 'Audio.Ambient.Global.Symphonic.Default'}, AmbientAudioSection: {Name: 'HiTech_Default_Empty', Conditions: [], actions: [], Children: []}, Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Tag: {TagName: 'Audio.Ambient.Mountains.Area.Fortress.BossArena'}, AmbientAudioSection: {Name: 'HiTech_Boss_Arena', Conditions: [], a
+      FloatProperty        CellSize = 750.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Audio.Ambient.Global.Symphonic.Default', Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Name: 'Audio.Ambient.Mountains.Area.Fortress.BossArena', Color: {B: 220, G: 16, R: 133, A: 255}, Guid: {A: 2053066446, B: 1111355465, C: -1463271750, D: 1273754513}}, {Name: 'Audio.Ambient.Mountains.Area.IndustrialHiTech.Interior.Room.Smal
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_AmbientAudio'
+
+  instance /Game/GameData/Audio/Design/WorldPainterLayers/SymphonicAmbient/World_P/WPLayer_Amb_WorldP_Biome_Mountains.WPLayer_Amb_WorldP_Biome_Mountains
+      ArrayProperty        AmbientAudioZones = [{Tag: {TagName: 'Audio.Ambient.Global.Symphonic.Default'}, AmbientAudioSection: {Name: 'MT_Default_Empty', Conditions: [], actions: [], Children: []}, Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Tag: {TagName: 'Audio.Ambient.Mountains.RockyMountain.Symphonic.Exterior'}, AmbientAudioSection: {Name: 'MT_E01', Conditions: [], actions
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Audio.Ambient.Global.Symphonic.Default', Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Name: 'Audio.Ambient.Mountains.RockyMountain.Symphonic.Exterior', Color: {B: 87, G: 113, R: 112, A: 255}, Guid: {A: 2053066446, B: 1111355465, C: -1463271750, D: 1273754513}}, {Name: 'Audio.Ambient.Mountains.SparseGreen.Symphonic.Exterior'
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_AmbientAudio'
+
+  instance /Game/GameData/Audio/Design/WorldPainterLayers/SymphonicAmbient/World_P/WPLayer_Amb_WorldP_Biome_Grasslands.WPLayer_Amb_WorldP_Biome_Grasslands
+      ArrayProperty        AmbientAudioZones = [{Tag: {TagName: 'Audio.Ambient.Global.Symphonic.Default'}, AmbientAudioSection: {Name: 'GL_Default_Empty', Conditions: [], actions: [], Children: []}, Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Tag: {TagName: 'Audio.Ambient.Grasslands.OpenFieldGreen.Symphonic.Exterior'}, AmbientAudioSection: {Name: 'GL_OpenFieldGreen', Conditions
+      FloatProperty        CellSize = 2000.0
+      BoolProperty         bMutuallyExclusive = True
+      ArrayProperty        options = [{Name: 'Audio.Ambient.Global.Symphonic.Default', Color: {B: 255, G: 255, R: 255, A: 255}, Guid: {A: 270423069, B: 1223032269, C: 1569864076, D: -1085630726}}, {Name: 'Audio.Ambient.Grasslands.OpenFieldGreen.Symphonic.Exterior', Color: {B: 0, G: 222, R: 20, A: 255}, Guid: {A: -1549973949, B: 1140285285, C: -981534300, D: 1529631588}}, {Name: 'Audio.Ambient.Grasslands.OpenFieldDry.Symphonic.Exterio
+      BoolProperty         bIsEditorOnly = False
+      ObjectProperty       RenderTarget = None
+      ObjectProperty       MaterialParameterCollection = None
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakWorldPainterLayer_AmbientAudio'
+
+### OakAudioGlobals: 1 live instance(s)
+  properties:
+    StrProperty          AuxBusName
+    FloatProperty        WetMindB
+    FloatProperty        WetMaxdB
+    FloatProperty        ReverbScaleDistance
+    GbxDefPtrProperty    DiscoveredRegionAudio
+    GbxDefPtrProperty    TimeDilationRTPC
+    MapProperty          WeaponTypeSwitchMap
+    ObjectProperty       Stingers
+    ObjectProperty       DamageFeedback
+    GbxDefPtrProperty    ElementalSwitches
+    GbxDefPtrProperty    GlobalWeatherEvent
+    MapProperty          PresetConfigEvents
+    MapProperty          EQConfigEvents
+
+  instance /Game/GameData/Audio/OakAudioGlobals.OakAudioGlobals
+      StrProperty          AuxBusName = 'Reverb'
+      FloatProperty        WetMindB = -24.0
+      FloatProperty        WetMaxdB = -6.0
+      FloatProperty        ReverbScaleDistance = 10000.0
+      GbxDefPtrProperty    DiscoveredRegionAudio = FGbxDefPtr('None', None, None)
+      GbxDefPtrProperty    TimeDilationRTPC = FGbxDefPtr('Global_RTPCs.TimeDialation', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 2.0}, WwiseName: 'timedialation', WorkUnit: 'Global_RTPCs', Guid: {A: -1518672223, B: 2031306539, C: -1710277078, D: 1658426033}, ShortID: 3605416367})
+      MapProperty          WeaponTypeSwitchMap = <unreadable>
+      ObjectProperty       Stingers = OakKillStingers'/Game/GameData/Audio/Oak_KillStingers_Default.Oak_KillStingers_Default'
+      ObjectProperty       DamageFeedback = OakAudioDamageFeedback'/Game/GameData/Audio/Oak_DamageFeedback_Default.Oak_DamageFeedback_Default'
+      GbxDefPtrProperty    ElementalSwitches = (FGbxDefPtr('Global_Switches.Element:Normal', 'WwiseSwitchDef', {owner: 'Element', OwnerShortID: 4135068155, WwiseName: 'Element:Normal', WorkUnit: 'Global_Switches', Guid: {A: -244416208, B: 1417101759, C: -1379050049, D: -1569541264}, ShortID: 1160234136}), FGbxDefPtr('Global_Switches.Element:Corrosive', 'WwiseSwitchDef', {owner: 'Element', OwnerShortID: 4135068155, WwiseName: 'Element:Corrosive
+      GbxDefPtrProperty    GlobalWeatherEvent = FGbxDefPtr('Amb_Weather.Amb_Global_Weather', 'WwiseEventDef', {bIsSimple: False, bIsLooping: True, bIsVoice: False, bCanEcho: False, DurationRange: {min: 0.0, MAX: 0.0}, MaxAttenuationRadius: 100.0, WwiseName: 'amb_global_weather', WorkUnit: 'Amb_Weather', Guid: {A: 1609889024, B: -2105586493, C: -1851737683, D: -765366258}, ShortID: 825576982})
+      MapProperty          PresetConfigEvents = <unreadable>
+      MapProperty          EQConfigEvents = <unreadable>
+      FloatProperty        BulletByCooldownInSeconds = 0.20000000298023224
+      FloatProperty        BulletByMinShooterDistance = 1000.0
+      FloatProperty        BulletByMaxPathProximity = 250.0
+      BoolProperty         bAlwaysScheduleBulletBy = False
+      EnumProperty         BulletByDeterminant = <EBulletByDeterminant.Listener: 0>
+      ClassProperty        MusicSystemClass = Class'/Script/OakGame.OakMusicSystem'
+      FloatProperty        MusicSystemTickRate = 1.0
+      ClassProperty        AudioVolumeAmbientSystemClass = None
+      GameDataHandleProperty AudioVolumeAudioProviderDef = FGameDataHandle(2863468560, 'None', None)
+      GbxDefPtrProperty    ExteriorAttenuationGameParameter = FGbxDefPtr('Global_RTPCs.Exterior_Attenuation', 'WwiseGameParameterDef', None)
+      ClassProperty        SymphonicAmbienceSystemClass = Class'/Script/OakGame.OakSymphonicAmbientAudio'
+      FloatProperty        SymphonicAmbienceTickRate = 1.0
+      FloatProperty        OpportunisticAudioTickRate = 1.0
+      GameDataHandleProperty OpportunisticAudioProviderDef = FGameDataHandle(2863468560, 'None', None)
+      GbxDefPtrProperty    HeadgearGameParameter = FGbxDefPtr('VO.VO_Headgear_Type', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 15.0}, WwiseName: 'VO_Headgear_Type', WorkUnit: 'VO', Guid: {A: -645787510, B: 934628618, C: -1094200513, D: -368636438}, ShortID: 788377183})
+      MapProperty          HeadgearValueMap = <unreadable>
+      GbxDefPtrProperty    ImpactVelocityGameParameter = FGbxDefPtr('PhysicsImpacts.Imp_Velocity', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'imp_velocity', WorkUnit: 'PhysicsImpacts', Guid: {A: 294859999, B: 549210893, C: -1493864657, D: -14313411}, ShortID: 3905726857})
+      GbxDefPtrProperty    ImpactMassGameParameter = FGbxDefPtr('PhysicsImpacts.Imp_Mass', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1000.0}, WwiseName: 'Imp_Mass', WorkUnit: 'PhysicsImpacts', Guid: {A: -987351721, B: 1200833618, C: -1352786676, D: -927029990}, ShortID: 4200605928})
+      ClassProperty        AcousticsSystemClass = Class'/Script/OakGame.OakAcousticSystem'
+      FloatProperty        AcousticsTickRate = 0.0
+      ObjectProperty       AcousticsConfig = OakAcousticsConfig'/Game/GameData/Audio/Oak_Acoustics_Config.Oak_Acoustics_Config'
+      GbxDefPtrProperty    MuteAcousticsRTPC = FGbxDefPtr('Global_RTPCs.IsAcousticsMuted', 'WwiseGameParameterDef', None)
+      GbxDefPtrProperty    CharacterWetnessRTPC = FGbxDefPtr('FoleySystem.Character_Wetness', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'character_wetness', WorkUnit: 'FoleySystem', Guid: {A: -1226274519, B: 1368215421, C: -2023115993, D: 794403503}, ShortID: 1056569454})
+      GbxDefPtrProperty    CharacterIsInAirRTPC = FGbxDefPtr('FoleySystem.Character_IsInAir', 'WwiseGameParameterDef', None)
+      MapProperty          MaterialToAudioEventList = <unreadable>
+      GbxDefPtrProperty    DefaultCollisionAudioEvent = FGbxDefPtr('Phys_Impacts.Phys_Imp_GenericObject', 'WwiseEventDef', None)
+      GbxDefPtrProperty    DestructionVelocityRTPC = FGbxDefPtr('PhysicsImpacts.DST_Velocity', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1000.0}, WwiseName: 'dst_velocity', WorkUnit: 'PhysicsImpacts', Guid: {A: -1066062861, B: 922765796, C: -1422108144, D: -578006613}, ShortID: 3352200548})
+      GbxDefPtrProperty    DestructionMassRTPC = FGbxDefPtr('PhysicsImpacts.DST_Mass', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 150.0}, WwiseName: 'dst_mass', WorkUnit: 'PhysicsImpacts', Guid: {A: -380167240, B: 2046705977, C: -1947864753, D: -1695663468}, ShortID: 3112024173})
+      FloatProperty        WallaSystemTickRate = 1.0
+      GbxDefPtrProperty    TownSizeRTPC = FGbxDefPtr('VO.VO_Walla_Town_Population', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 50.0}, WwiseName: 'vo_walla_town_population', WorkUnit: 'VO', Guid: {A: 1126250332, B: -1094303052, C: -1082106142, D: -172636234}, ShortID: 1013857675})
+      GbxDefPtrProperty    IsSubmergedRTPC = FGbxDefPtr('Global_RTPCs.IsSubmerged', 'WwiseGameParameterDef', None)
+      GbxDefPtrProperty    WadingPercentageRTPC = FGbxDefPtr('FoleySystem.Character_Wading_Percentage', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'Character_Wading_Percentage', WorkUnit: 'FoleySystem', Guid: {A: 736362031, B: -341356629, C: -1409356830, D: -726441102}, ShortID: 886008880})
+      ClassProperty        RadioSystemClass = Class'/Script/OakGame.OakRadioSystem'
+      FloatProperty        RadioSystemTickRate = 1.0
+      ObjectProperty       RadioConfig = OakRadioConfig'/Game/GameData/Audio/Oak_Radio_Config.Oak_Radio_Config'
+      ArrayProperty        WeatherStates = [{StateName: 'Rain', Switch: FGbxDefPtr('FoleySystem.FootstepWetnessType:Water', 'WwiseSwitchDef', None), WetnessValue: 1.0}, {StateName: 'Snow', Switch: FGbxDefPtr('FoleySystem.FootstepWetnessType:Snow', 'WwiseSwitchDef', None), WetnessValue: 1.0}]
+      GbxDefPtrProperty    ScreenPosX = FGbxDefPtr('UX.UI_SpatialPanner_X', 'WwiseGameParameterDef', {Range: {min: -1.0, MAX: 1.0}, WwiseName: 'ui_spatialpanner_x', WorkUnit: 'UX', Guid: {A: -351959989, B: -1206105187, C: -1407540711, D: 1050341208}, ShortID: 1304630303})
+      GbxDefPtrProperty    ScreenPosY = FGbxDefPtr('UX.UI_SpatialPanner_Y', 'WwiseGameParameterDef', {Range: {min: -1.0, MAX: 1.0}, WwiseName: 'ui_spatialpanner_y', WorkUnit: 'UX', Guid: {A: -965877858, B: -613923323, C: -1357939753, D: 172049255}, ShortID: 1304630302})
+      GbxDefPtrProperty    ListenerApproachSpeedRTPC = FGbxDefPtr('PositionAndVelocity.Listener_ApproachSpeed', 'WwiseGameParameterDef', {Range: {min: -10000.0, MAX: 10000.0}, WwiseName: 'listener_approachspeed', WorkUnit: 'PositionAndVelocity', Guid: {A: 786555741, B: 997409011, C: -1909199415, D: -1948937130}, ShortID: 3173983565})
+      GbxDefPtrProperty    SourceSpeedRTPC = FGbxDefPtr('PositionAndVelocity.Source_Speed', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 10000.0}, WwiseName: 'Source_Speed', WorkUnit: 'PositionAndVelocity', Guid: {A: -1932279511, B: 373051065, C: -1907264542, D: 965936698}, ShortID: 3210934910})
+      GbxDefPtrProperty    SourceAngularVelocityRTPC = FGbxDefPtr('PositionAndVelocity.Source_AngularVelocity', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'Source_AngularVelocity', WorkUnit: 'PositionAndVelocity', Guid: {A: 851309734, B: 1316506558, C: -2093365833, D: 1138788589}, ShortID: 2724083708})
+      GbxDefPtrProperty    OwnerImplementerSizeRTPC = FGbxDefPtr('Global_RTPCs.OwnerSize', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 2000.0}, WwiseName: 'ownersize', WorkUnit: 'Global_RTPCs', Guid: {A: -1249401209, B: -295354106, C: -1131404234, D: -2063925897}, ShortID: 3968131265})
+      GbxDefPtrProperty    instigator = FGbxDefPtr('Global_RTPCs.instigator', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 4.0}, WwiseName: 'instigator', WorkUnit: 'Global_RTPCs', Guid: {A: 872585190, B: 1290880299, C: -1743095881, D: -1364409156}, ShortID: 2293278385})
+      GbxDefPtrProperty    PerspectiveRTPC = FGbxDefPtr('Default_Work_Unit.Perspective', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'perspective', WorkUnit: 'Default_Work_Unit', Guid: {A: -2103732647, B: -1451800859, C: -1317418414, D: -1793562413}, ShortID: 3838734001})
+      GbxDefPtrProperty    RandomVariationRTPC = FGbxDefPtr('Global_RTPCs.RandomVariation', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'randomvariation', WorkUnit: 'Global_RTPCs', Guid: {A: -1615079110, B: 2068204843, C: -2116669138, D: -1812565823}, ShortID: 2783780711})
+      ObjectProperty       UserSettings = OakAudioUserSettings'/Game/GameData/Audio/OakAudioUserSettings.OakAudioUserSettings'
+      GbxDefPtrProperty    NumLocalPlayersRTPC = FGbxDefPtr('Mixing.Mix_NumLocalPlayers', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 4.0}, WwiseName: 'mix_numlocalplayers', WorkUnit: 'Mixing', Guid: {A: 2087842260, B: -1896198643, C: -1187205551, D: -734457017}, ShortID: 2812987593})
+      GbxInlineStructProperty AcousticsDataProvider = WrappedInlineStruct({SubmixBus: FGbxDefPtr('Default_Work_Unit.Acoustics_Submix', 'WwiseAuxBusDef', {FxMediaBanks: [], WwiseName: 'acoustics_submix', WorkUnit: 'Default_Work_Unit', Guid: {A: 823821746, B: -1993585556, C: -1687624960, D: 1495178489}, ShortID: 2371356622}), EarlyReflectionBus: FGbxDefPtr('Default_Work_Unit.Early_Reflections', 'WwiseAuxBusDef', {FxMediaBanks: [], WwiseName: 'early_ref
+      GbxDefPtrProperty    OfflinePauseEvent = FGbxDefPtr('Global_Mix_Modes.Global_Mix_Pause_Start', 'WwiseEventDef', {bIsSimple: False, bIsLooping: False, bIsVoice: False, bCanEcho: False, DurationRange: {min: 0.0, MAX: 0.0}, MaxAttenuationRadius: 0.0, WwiseName: 'global_mix_pause_start', WorkUnit: 'Global_Mix_Modes', Guid: {A: -1953736206, B: -1926804090, C: -1681189605, D: 1395051755}, ShortID: 2659005693})
+      GbxDefPtrProperty    OfflineResumeEvent = FGbxDefPtr('Global_Mix_Modes.Global_Mix_Pause_Stop', 'WwiseEventDef', {bIsSimple: False, bIsLooping: False, bIsVoice: False, bCanEcho: False, DurationRange: {min: 0.0, MAX: 0.0}, MaxAttenuationRadius: 0.0, WwiseName: 'global_mix_pause_stop', WorkUnit: 'Global_Mix_Modes', Guid: {A: 1453190137, B: -1027652233, C: -1291269578, D: 2071119944}, ShortID: 2453612927})
+      GbxDefPtrProperty    OnlinePauseEvent = FGbxDefPtr('Global_Mix_Modes.Global_Mix_FakePause_Start', 'WwiseEventDef', None)
+      GbxDefPtrProperty    OnlineResumeEvent = FGbxDefPtr('Global_Mix_Modes.Global_Mix_FakePause_Stop', 'WwiseEventDef', None)
+      GbxDefPtrProperty    DefaultEnvironmentSwitch = FGbxDefPtr('Weapons.Wep_Tail_Env:Ext_Gra', 'WwiseSwitchDef', {owner: 'Wep_Tail_Env', OwnerShortID: 1648795636, WwiseName: 'wep_tail_env:ext_gra', WorkUnit: 'Weapons', Guid: {A: -391370401, B: 960513920, C: -1426047530, D: -899117204}, ShortID: 1839137431})
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakAudioGlobals'
+
+### OakAudioUserSettings: 1 live instance(s)
+  properties:
+    GbxDefPtrProperty    UITrimRTPC
+    GbxDefPtrProperty    UI_ControllerSpeakerSendRTPC
+    GbxDefPtrProperty    PlayerWeaponTrimRTPC
+    GbxDefPtrProperty    ExplosionsTrimRTPC
+    GbxDefPtrProperty    OutgoingDamageTrimRTPC
+    GbxDefPtrProperty    IncomingDamageTrimRTPC
+    GbxDefPtrProperty    PlayerVoiceVolumeRTPC
+    GbxDefPtrProperty    PlayerEffortsTrimRTPC
+    GbxDefPtrProperty    PlayerCalloutsTrimRTPC
+    GbxDefPtrProperty    PlayerIdleLinesTrimRTPC
+    GbxDefPtrProperty    CombatVoiceVolumeRTPC
+    GbxDefPtrProperty    ClaptrapVolumeRTPC
+    GbxDefPtrProperty    ClaptrapIncreaseEvent
+    GbxDefPtrProperty    ClaptrapDecreaseEvent
+    FloatProperty        ClaptrapCooldown
+    GbxDefPtrProperty    MenuMusicVolumeRTPC
+    GbxDefPtrProperty    GameMusicVolumeRTPC
+    GbxDefPtrProperty    CinematicMusicVolumeRTPC
+    GbxDefPtrProperty    BossMusicTrimRTPC
+
+  instance /Game/GameData/Audio/OakAudioUserSettings.OakAudioUserSettings
+      GbxDefPtrProperty    UITrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_UI', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_ui', WorkUnit: 'VolumeControls', Guid: {A: 1585921972, B: 1622295095, C: -1462687222, D: 1246900235}, ShortID: 1193727888})
+      GbxDefPtrProperty    UI_ControllerSpeakerSendRTPC = FGbxDefPtr('UX.UI_ControllerSpeakerSend', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'ui_controllerspeakersend', WorkUnit: 'UX', Guid: {A: 1745230340, B: -950711577, C: -1897393118, D: -940272629}, ShortID: 457179171})
+      GbxDefPtrProperty    PlayerWeaponTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_PlayerWeapon', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_playerweapon', WorkUnit: 'VolumeControls', Guid: {A: -1613883544, B: -1651880805, C: -1953209330, D: -2018600177}, ShortID: 1490685765})
+      GbxDefPtrProperty    ExplosionsTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_Explosions', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_explosions', WorkUnit: 'VolumeControls', Guid: {A: 294826219, B: -148353500, C: -2059233191, D: 1007336466}, ShortID: 4111924522})
+      GbxDefPtrProperty    OutgoingDamageTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_OutgoingDamage', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_outgoingdamage', WorkUnit: 'VolumeControls', Guid: {A: -6733254, B: 2109556025, C: -1608695958, D: -77407795}, ShortID: 2064551547})
+      GbxDefPtrProperty    IncomingDamageTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_IncomingDamage', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_incomingdamage', WorkUnit: 'VolumeControls', Guid: {A: -1263231558, B: -1169144988, C: -1338938941, D: -1183349974}, ShortID: 481980017})
+      GbxDefPtrProperty    PlayerVoiceVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_PlayerVoice', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_playervoice', WorkUnit: 'VolumeControls', Guid: {A: 1210930188, B: -1106162389, C: -1914871804, D: -396549299}, ShortID: 638906524})
+      GbxDefPtrProperty    PlayerEffortsTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_PlayerEfforts', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_playerefforts', WorkUnit: 'VolumeControls', Guid: {A: -1289014847, B: 909068318, C: -1229224627, D: -1852762149}, ShortID: 3333265402})
+      GbxDefPtrProperty    PlayerCalloutsTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_PlayerCallouts', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_playercallouts', WorkUnit: 'VolumeControls', Guid: {A: 404817782, B: 1635929972, C: -1239634580, D: 948145414}, ShortID: 2028126770})
+      GbxDefPtrProperty    PlayerIdleLinesTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_PlayerIdleLines', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_playeridlelines', WorkUnit: 'VolumeControls', Guid: {A: -1405501335, B: 1991527005, C: -2135992716, D: 1651939545}, ShortID: 3379782572})
+      GbxDefPtrProperty    CombatVoiceVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_CombatVoice', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_combatvoice', WorkUnit: 'VolumeControls', Guid: {A: 998332286, B: 1094206802, C: -1626459657, D: 1970442761}, ShortID: 665666973})
+      GbxDefPtrProperty    ClaptrapVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_Claptrap', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_claptrap', WorkUnit: 'VolumeControls', Guid: {A: 1150045698, B: -2062792390, C: -1695640463, D: -1882964374}, ShortID: 1981974766})
+      GbxDefPtrProperty    ClaptrapIncreaseEvent = FGbxDefPtr('VO_Oak2_UI.OAK2_VOCT_Claptrap_UI_Vol_Up', 'WwiseEventDef', None)
+      GbxDefPtrProperty    ClaptrapDecreaseEvent = FGbxDefPtr('VO_Oak2_UI.OAK2_VOCT_Claptrap_UI_Vol_Down', 'WwiseEventDef', None)
+      FloatProperty        ClaptrapCooldown = 5.0
+      GbxDefPtrProperty    MenuMusicVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_Music_Menu', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_music_menu', WorkUnit: 'VolumeControls', Guid: {A: -1089838060, B: 27413785, C: -1497481223, D: 381679146}, ShortID: 3572359356})
+      GbxDefPtrProperty    GameMusicVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_Music_Game', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_music_game', WorkUnit: 'VolumeControls', Guid: {A: -184868023, B: 2079083008, C: -1413874669, D: -813608304}, ShortID: 2476962059})
+      GbxDefPtrProperty    CinematicMusicVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_Music_Cinematic', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_music_cinematic', WorkUnit: 'VolumeControls', Guid: {A: 1972604104, B: 1755073152, C: -1995670014, D: 724336043}, ShortID: 533330340})
+      GbxDefPtrProperty    BossMusicTrimRTPC = FGbxDefPtr('VolumeControls.User_Trim_Music_Boss', 'WwiseGameParameterDef', {Range: {min: -10.0, MAX: 0.0}, WwiseName: 'user_trim_music_boss', WorkUnit: 'VolumeControls', Guid: {A: -716220517, B: -441956758, C: -1488675579, D: 150584044}, ShortID: 3927659965})
+      GbxDefPtrProperty    MasterVolumeRTPC = FGbxDefPtr('VolumeControls.Master_Volume', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'master_volume', WorkUnit: 'VolumeControls', Guid: {A: 394116087, B: 2046512025, C: -1674232390, D: -262845046}, ShortID: 4179668880})
+      GbxDefPtrProperty    MusicVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_Music', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_music', WorkUnit: 'VolumeControls', Guid: {A: -910092832, B: -160870422, C: -1642359678, D: 1028835718}, ShortID: 1709453178})
+      GbxDefPtrProperty    SFXVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_Sfx', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_sfx', WorkUnit: 'VolumeControls', Guid: {A: -246676927, B: 1781613796, C: -1816752689, D: -2141233654}, ShortID: 3983909002})
+      GbxDefPtrProperty    DialogVolumeRTPC = FGbxDefPtr('VolumeControls.User_Vol_Voice', 'WwiseGameParameterDef', {Range: {min: 0.0, MAX: 1.0}, WwiseName: 'user_vol_voice', WorkUnit: 'VolumeControls', Guid: {A: -982309772, B: -1234419533, C: -1902043847, D: -1670601205}, ShortID: 1867035213})
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakAudioUserSettings'
+
+### OakAudioDamageFeedback: 1 live instance(s)
+  properties:
+    GbxDefPtrProperty    DamageDealtSound
+    GbxDefPtrProperty    DamageDealtShieldSound
+    GbxDefPtrProperty    DamageDealtOvershieldSound
+    GbxDefPtrProperty    DamageDealtCriticalSound
+    GbxDefPtrProperty    DamageDealtReflectedSound
+    GbxDefPtrProperty    DamageDealtInvulnerableSound
+    FloatProperty        cooldown
+
+  instance /Game/GameData/Audio/Oak_DamageFeedback_Default.Oak_DamageFeedback_Default
+      GbxDefPtrProperty    DamageDealtSound = FGbxDefPtr('UI.HUD_DmgDealt_HitMarker', 'WwiseEventDef', None)
+      GbxDefPtrProperty    DamageDealtShieldSound = FGbxDefPtr('UI.HUD_DmgDealt_HitMarker', 'WwiseEventDef', None)
+      GbxDefPtrProperty    DamageDealtOvershieldSound = FGbxDefPtr('UI.HUD_DmgDealt_HitMarker', 'WwiseEventDef', None)
+      GbxDefPtrProperty    DamageDealtCriticalSound = FGbxDefPtr('UI.HUD_DmgDealt_HitMarker', 'WwiseEventDef', None)
+      GbxDefPtrProperty    DamageDealtReflectedSound = FGbxDefPtr('UI.HUD_DmgDealt_HitMarker_NoDmg', 'WwiseEventDef', None)
+      GbxDefPtrProperty    DamageDealtInvulnerableSound = FGbxDefPtr('UI.HUD_DmgDealt_HitMarker_NoDmg', 'WwiseEventDef', None)
+      FloatProperty        cooldown = 0.10000000149011612
+      ClassProperty        NativeClass = Class'/Script/OakGame.OakAudioDamageFeedback'
+
+### OakMusicDef: NOT FOUND
+
+### OakMusicZone: NOT FOUND
+
+### OakMusicParams: NOT FOUND
+
+### OakWwiseSwitchZone: NOT FOUND
+
+### WwiseEventDef: NOT FOUND
+
+### WwiseSwitchDef: NOT FOUND
+
+### WwiseStateDef: NOT FOUND
+
+### WwiseSoundBankDef: NOT FOUND
+
+### GbxAudioGraphManager: NOT FOUND
+
+### WorldPainterLayer: NOT FOUND

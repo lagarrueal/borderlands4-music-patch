@@ -1,0 +1,16 @@
+=== probe tone ===
+--- override test: WPLayer_Mus_Ambiance_CTY ---
+  found as SoundWave: actual class = SoundWave
+  >>> OVERRIDE WORKED - our asset replaced BL4's
+
+not resident yet - loading
+class    = SoundWave
+duration = 4.0
+channels = 1
+rate     = 44100
+codec    = 2
+world    = /Game/Maps/WorldLevels/World_P.World_P:PersistentLevel.OakPlayerController_2147373732
+SpawnSound2D -> None
+component is None - engine declined to create one
+trying PlaySound2D as a fallback
+PlaySound2D returned without raising

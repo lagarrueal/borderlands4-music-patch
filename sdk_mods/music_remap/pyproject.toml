@@ -1,0 +1,11 @@
+[project]
+name = "MusicRemap"
+version = "2.2"
+authors = [{ name = "alexa" }]
+description = "Proves BL4's music selection can be driven from the SDK by rewriting which Wwise switch each world music zone activates. Uses only music already in the game."
+
+[tool.sdkmod]
+name = "Music Remap"
+version = "2.2"
+license = { name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
+coop_support = "ClientSide"

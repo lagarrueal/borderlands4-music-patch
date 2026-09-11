@@ -1,0 +1,195 @@
+# BL4 package loading - what actually works
+
+## 1. currently loaded Package objects
+23099 loaded
+
+of those, 22368 start with /Game:
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/AITree_GunToterAssault
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault4Arm
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault4Arm_Female_HitDetection
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault4Arm_Female_PhysicsAsset
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault4Arm_Male_PhysicsAsset
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault_Female_HitDetection
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault_Female_PhysicsAsset
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToterAssault_Male_PhysicsAsset
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToter_Assault4Arm_Male_HitDetection
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Body_GunToter_Assault_Male_HitDetection
+    /Game/AI/ArmyBandit/GunToter/Assault/_Design/Character/Script_GunToterAssault
+    /Game/AI/ArmyBandit/GunToter/Badass/_Design/Character/AITree_GunToterBadass
+    /Game/AI/ArmyBandit/GunToter/Badass/_Design/Character/Body_GunToterBadass
+    /Game/AI/ArmyBandit/GunToter/Badass/_Design/Character/Body_GunToterBadass4Arm_Male_HitDetection
+    /Game/AI/ArmyBandit/GunToter/Badass/_Design/Character/Body_GunToterBadass_Male_HitDetection
+    /Game/AI/ArmyBandit/GunToter/Badass/_Design/Character/Body_GunToterBadass_Male_PhysicsAsset
+    /Game/AI/ArmyBandit/GunToter/Badass/_Design/Character/Script_GunToter_Badass
+    /Game/AI/ArmyBandit/GunToter/Corrupt/_Design/Character/AITree_GunToterCorrupt
+    /Game/AI/ArmyBandit/GunToter/Corrupt/_Design/Character/Body_GunToterCorrupt
+    /Game/AI/ArmyBandit/GunToter/Corrupt/_Design/Character/Script_GunToterCorrupt
+    /Game/AI/ArmyBandit/GunToter/Corrupt/_Design/Cloaking/TRAnim_GunToter_Corrupt_CloakEnter
+    /Game/AI/ArmyBandit/GunToter/Corrupt/_Design/Cloaking/TRAnim_GunToter_Corrupt_CloakExit
+    /Game/AI/ArmyBandit/GunToter/Corrupt/_Design/GPS/Gps_GuntoterCorrupt_Teleport
+    /Game/AI/ArmyBandit/GunToter/Corrupt/_Design/Tricks/TRAnim_GunToter_Corrupt_SummonOrb
+    /Game/AI/ArmyBandit/GunToter/Heavy/_Design/Character/AITree_GunToterHeavy
+    /Game/AI/ArmyBandit/GunToter/Heavy/_Design/Character/Body_GunToterHeavy
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/Character/AITree_GunToterLoot
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/Character/Body_GunToterLoot_Female
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/Character/Body_GunToterLoot_Male
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/Character/Script_GunToterLoot
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/GPS/Gps_GunToterLoot_RunAwayFromTarget
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/GPS/Gps_GunToter_LootBombTossLoc
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/Tricks/TRAnim_GunToter_Loot_EquipLeft
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/Tricks/TRAnim_GunToter_Loot_EquipRight
+    /Game/AI/ArmyBandit/GunToter/Loot/_Design/Tricks/TRAnim_GunToter_Loot_TossGift
+    /Game/AI/ArmyBandit/GunToter/Pistol/_Design/Character/AITree_GunToterPistol
+    /Game/AI/ArmyBandit/GunToter/Pistol/_Design/Character/Body_GunToterPistol
+    /Game/AI/ArmyBandit/GunToter/Pistol/_Design/Character/Body_GunToterPistol4Arm
+    /Game/AI/ArmyBandit/GunToter/SMG/_Design/Character/AITree_GunToterSMG
+    /Game/AI/ArmyBandit/GunToter/SMG/_Design/Character/Body_GunToterSMG
+    /Game/AI/ArmyBandit/GunToter/SMG/_Design/Character/Body_GunToterSMG4Arm
+    /Game/AI/ArmyBandit/GunToter/Shotgun/_Design/Character/AITicket_ShotGunToterApproach
+    /Game/AI/ArmyBandit/GunToter/Shotgun/_Design/Character/AITicket_ShotGunToterOrbit
+    /Game/AI/ArmyBandit/GunToter/Shotgun/_Design/Character/AITree_GunToterShotgun
+    /Game/AI/ArmyBandit/GunToter/Shotgun/_Design/Character/Body_GunToterShotgun
+    /Game/AI/ArmyBandit/GunToter/Shotgun/_Design/Character/Body_GunToterShotgun4Arm
+    /Game/AI/ArmyBandit/GunToter/Small/_Design/Character/AITree_GunToterSmall
+    /Game/AI/ArmyBandit/GunToter/Small/_Design/Character/Body_GunToterSmall
+    /Game/AI/ArmyBandit/GunToter/Small/_Design/Character/Script_GunToterSmall
+    /Game/AI/ArmyBandit/GunToter/Sniper/_Design/Character/AITree_GunToterSniper
+    /Game/AI/ArmyBandit/GunToter/Sniper/_Design/Character/BPI_GunToterSniper
+    /Game/AI/ArmyBandit/GunToter/Sniper/_Design/Character/Body_GunToterSniper
+    /Game/AI/ArmyBandit/GunToter/Sniper/_Design/Character/Script_GunToterSniper
+    /Game/AI/ArmyBandit/GunToter/Sniper/_Design/Composites/AC_GuntoterSniper_TargetLock_Enter
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/ASet_GunToter_Combat
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Corrupted/AS_Attack_SummonOrb
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Corrupted/AS_Teleport_Enter
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Corrupted/AS_Teleport_Exit
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/HW/ASet_GunToter_MAL_HW_Override
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/HW/ASet_GunToter_TOR_HW_Override
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Loot/AS_Escape
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Loot/AS_Loot_Grenade_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Loot/AS_Loot_Grenade_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Pistol/ASet_GunToter_JAK_PS_Override
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Pistol/ASet_GunToter_PS_Override
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_ADD_RH_Fire
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_ADD_RH_Flinch_B
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_ADD_RH_Flinch_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_ADD_RH_Flinch_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_ADD_RH_Flinch_Netural
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_ADD_RH_Flinch_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_Death_Fire_V1
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_Death_Fire_V2
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_Death_Shock_V1
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_Death_Shock_V2
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Combat_to_Passive
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Death_B
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Death_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Death_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Death_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Dodge_Grenade_FL
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Dodge_Grenade_FR
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Dodge_Idle_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Dodge_Idle_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Dodge_Moving_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Dodge_Moving_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Falling_InAir
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Falling_Recover
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Getup_FaceUp
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Getup_Facedown
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Grenade_Throw_v1
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Grenade_Throw_v2
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Idle
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Idle_Turn_180_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Idle_Turn_180_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Idle_Turn_90_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Idle_Turn_90_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Idle_Turn_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Launch_InAir
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Melee_v1
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Melee_v2
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Reload_v1
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Reload_v2
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_B
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_Start_B
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_Start_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_Stop_B_Lleg
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_Stop_B_Rleg
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_Stop_F_Lleg
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Run_Stop_F_Rleg
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Sprint_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Sprint_Start_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Sprint_Start_Turn_180_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Sprint_Start_Turn_180_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Sprint_Start_Turn_90_L
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Sprint_Start_Turn_90_R
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Sprint_Stop_F
+    /Game/AI/ArmyBandit/GunToter/_Shared/Animation/Combat/Rifle/AS_RH_Stagger_B
+
+first 40 of ALL package names, whatever their shape:
+    /Script/CoreUObject
+    /Script/GbxGame
+    /Script/AnimationCore
+    Default__Package
+    /Script/InputCore
+    /Script/DeveloperSettings
+    /Script/SlateCore
+    /Script/ImageCore
+    /Script/Slate
+    /Script/EngineSettings
+    /Script/BuildPatchServices
+    /Script/PhysicsCore
+    /Script/NetCore
+    /Script/JsonUtilities
+    /Script/IrisCore
+    /Script/MeshDescription
+    /Script/StaticMeshDescription
+    /Script/SkeletalMeshDescription
+    /Script/DataflowCore
+    /Script/ClothingSystemRuntimeInterface
+    /Script/AssetRegistry
+    /Script/FieldNotification
+    /Script/PropertyPath
+    /Script/AudioExtensions
+    /Script/TypedElementFramework
+    /Script/TypedElementRuntime
+    /Script/AudioLinkCore
+    /Script/PacketHandler
+    /Script/Engine
+    /Script/GbxNexus
+    /Script/GbxCore
+    /Script/GbxEngine
+    /Script/GbxPhysics
+    /Script/ImageWriteQueue
+    /Script/MaterialShaderQualitySettings
+    /Script/EyeTracker
+    /Script/Renderer
+    /Script/HeadMountedDisplay
+    /Script/Foliage
+    /Script/Landscape
+
+
+## 2. load_package / find_object per candidate
+
+/Game/Maps/WorldLevels/World_P
+    find_object -> Package'/Game/Maps/WorldLevels/World_P'
+    load_package -> None
+
+/Game/DLC/Cello/uiresources/dialog_popup_images/ui_art_upsell_dlc_cello
+    find_object -> ValueError: Couldn't find object '/Game/DLC/Cello/uiresources/dialog_popup_images/ui_art_upsell_dlc_cello'
+    load_package -> None
+
+/Game/DLC/Common/uiresources/celeb_notif_medals/assets/ui_bkg_td_medal_bronze
+    find_object -> ValueError: Couldn't find object '/Game/DLC/Common/uiresources/celeb_notif_medals/assets/ui_bkg_td_medal_bronze'
+    load_package -> None
+
+/Game/DLC/Banjo/Movies/010MDI_MercenaryDayIntro_51L
+    find_object -> ValueError: Couldn't find object '/Game/DLC/Banjo/Movies/010MDI_MercenaryDayIntro_51L'
+    load_package -> None
+
+/Engine/Transient
+    find_object -> Package'/Engine/Transient'
+    load_package -> None
+
+
+## 3. real (non-CDO) SoundBase objects
+    0

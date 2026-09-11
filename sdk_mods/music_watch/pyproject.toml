@@ -1,0 +1,11 @@
+[project]
+name = "MusicWatch"
+version = "1.0"
+authors = [{ name = "alexa" }]
+description = "Hooks BL4's audio calls and logs them as they happen, so the music triggers can be observed directly instead of guessed at by walking around."
+
+[tool.sdkmod]
+name = "Music Watch"
+version = "1.0"
+license = { name = "GPL3", url = "https://choosealicense.com/licenses/gpl-3.0/" }
+coop_support = "ClientSide"
