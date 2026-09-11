@@ -12,3 +12,6 @@ Saved/
 Intermediate/
 DerivedDataCache/
 __pycache__/
+
+# generated - rebuild with wwise/index_audio.py and wwise/map_cues.py
+wwise/data/

@@ -3,10 +3,13 @@
 Goal: give BL4 the ambient and combat music it lacks, ideally by importing BL2/BL3
 tracks.
 
-**Status: the original plan is dead.** BL4 does not initialise Unreal's native
-audio mixer, so custom `USoundWave`s cannot be played alongside the game's audio —
-however cleanly they cook, pack and load. The only remaining in-engine route is
-overriding BL4's own Wwise bank media. See *Answered: the mixer is off*.
+**Status: the UE route is dead; the Wwise route is open — and is not what it
+looked like.** BL4 does not initialise Unreal's native audio mixer, so custom
+`USoundWave`s can never be played, however cleanly they cook, pack and load
+(*Answered: the mixer is off*). But BL4's `.wem` media are **loose files in the
+legacy paks**, not payloads buried inside `.bnk`. Replacing music is therefore an
+ordinary file override — the same mechanism as the proven `.css` mod — and needs
+no bank surgery at all. See *The Wwise side*.
 
 > Packaging rules, `.ncs` handling and safety live in the parent `../CLAUDE.md`.
 > This file covers only audio.
@@ -124,12 +127,113 @@ that was verified upstream of this — cook, retoc, mount, load, and the whole
 `AudioComponent` API — is unusable because there is no device underneath it.
 `GetAudioTimeSeconds` advancing is just the world audio clock and means nothing.
 
-**The only remaining in-engine route** is replacing `.wem` payloads inside BL4's own
-Wwise banks, in the 53.6 GB legacy `.pak` side. That fits how BL4 modding actually
-works (overrides, which are proven) and there are 91 cue slots to overwrite. You can
-only replace tracks, never add them, and the audio must fit the existing
-event/segment structure. FModel bundles vgmstream for decoding `.wem`; re-encoding
-needs community Wwise tooling.
+**The remaining in-engine route is the Wwise side**, described below — with one
+correction to what this file used to say: it does *not* require editing bank media,
+because the `.wem` are loose files. You can still only replace cues, never add
+them, and the audio has to fit the existing segment structure.
+
+## The Wwise side
+
+**Every `.wem` is a loose file.** `OakGame/Content/WwiseAudio/Media/<id>.wem`,
+764,789 distinct paths across the legacy paks (57,226 of them non-localised; the
+rest are voice, per language). Banks are separate and tiny — 29 `.bnk`, 12 MB
+total — and hold only structure, no music payload. Replacing a track is a plain
+file override, exactly like `EpicsLargerFirmwareLocks_5010_P` overriding a `.css`.
+
+**All audio lives in `pakchunk2`.** Nothing else needs scanning. The master music
+bank is `1731745708.bnk` (7.3 MB): 601 music segments, 2757 music tracks, 35 music
+switch containers, 220 playlists.
+
+**1612 `.wem` are music — 1.29 GB.** Stereo 48 kHz **Wwise Opus** (`fmt` tag
+`0x3041`), long-form: median clip 57 s, the big ambient pieces 7:05. Everything
+else (SFX, VO) is **Wwise Vorbis** (`0xffff`). **BL4 ships no PCM or ADPCM `.wem`
+at all**, so do not assume the runtime can decode them — an injected PCM `.wem` is
+an untested gamble, not a shortcut.
+
+### repak cannot read three of BL4's paks — and one of them matters
+
+`pakchunk2-Windows_{2,5,21}_P.pak` make `repak` panic
+(`index out of bounds ... 18446744071562067967`). They are patch paks containing
+**deletion records**: the full directory index stores `INT32_MIN` as the entry
+index to mean "this file is gone". repak reads that as an array offset and dies,
+and `repak list` silently yields nothing for them, so they vanish from any
+manifest built that way.
+
+That is not academic: **`pakchunk2-Windows_21_P` holds the newest master music
+bank.** It is byte-for-byte the same size as the v20 copy and differs in 22 bytes,
+so nothing looks wrong — analysis just silently runs on a stale bank. 65 files are
+deleted by patches this way.
+
+`wwise/pakx.py` parses the index itself (deletions included) and extracts through
+Oodle; it was validated byte-identical against repak on a pak repak *can* read.
+**Newest-wins still applies: highest `_<M>_P` wins.**
+
+### Reading the bank (Wwise v145)
+
+`wwise/bank.py`. Three things cost time and are not in the obvious references:
+
+- **`AkTrackSrcInfo` gained a `u32 eventID`** at bank version ≥ 140, between
+  `sourceID` and the four `f64` time fields. Miss it and 2689 of 2757 music tracks
+  fail to parse — and the clip durations come out as absurd numbers rather than
+  erroring.
+- **A `u8 eMode` sits between `uTreeDataSize` and the `AkDecisionTree` itself.**
+  Off-by-one here still "parses": every node reads shifted by a byte, and the tell
+  is weights of 12800/25600 instead of Wwise's defaults of 50/100.
+- **Walk the hierarchy upward.** `Children` lists sit behind fully variable
+  `NodeBaseParams` tails, but `DirectParentID` is at a small computable offset from
+  the *start* of `NodeBaseParams`. Going up from tracks avoids parsing state chunks
+  and RTPCs entirely. Validation is free: every parent must be the type Wwise's
+  model allows (track→segment→playlist→switch container), and it is, 2757/2757.
+
+### Cue names
+
+Wwise stores only FNV-1 32-bit hashes of lowercased names; BL4 ships no
+`SoundbanksInfo`. Names come from two places:
+
+1. **Cooked `uasset` name tables.** `retoc to-legacy -f Mus` over the containers
+   yields `Music.<group>:<value>` strings — 149 of them, 9 groups. The layer assets
+   are in `pakchunk6`/`pakchunk4`, not `pakchunk0`.
+2. **Hashing candidates against the ids in the bank** for the rest.
+
+17 switch groups, all named (`mus_gameplay_state` is the master — its subtree
+reaches all 1612 files; `mus_combat_type` × `mus_biome` selects combat music).
+**Treat brute-forced names with suspicion**: a 600M-candidate sweep over a 32-bit
+space produces collisions, and it returned `mus_herbs_pail` for group 2363331616,
+which is not a plausible name. `arjay_boss` and `mus_gameplay_state` are kept only
+because independent event/bank strings corroborate them.
+
+`findings/cue_to_wem.json` — 184 cues, 89 fully named, covering all 1612 files.
+
+### Why BL4's music is missing
+
+**The four zone switch groups have no default branch.** Their decision trees carry
+no `key == 0` fallback and no value hashing to `default`. The painted world zones
+set `Music.mus_ambiance_zone_CTY:default` and friends — a value the bank does not
+define — so Wwise matches nothing and plays silence. `mus_combat_type` *does* carry
+`key == 0` branches, which is why combat music works and zone ambience does not.
+
+This is the mechanism behind "91 cues exist, the game plays a handful". It also
+means a remap mod (pointing zones at real switch values) is a genuinely separate
+fix from replacing audio.
+
+### Building an override
+
+`wwise/build_override.py` takes a spec naming cues or `.wem` ids and emits
+`pak` + the stub `utoc`/`ucas` that makes it mount. Reusing one of the game's own
+music `.wem` is the only substitution with no codec risk.
+
+```bash
+python wwise/index_audio.py                      # newest-wins audio index
+python wwise/map_cues.py                         # cue -> .wem map
+python wwise/build_override.py probe_combat_swap.json BL4MusicProbe_9700_P build
+```
+
+**Untested as of this writing:** whether the game actually reads an overridden
+`.wem`. `BL4MusicProbe_9700_P` is installed to answer exactly that — it points all
+open-world biome combat music (38 files) at the calm `Mnt_WelcomeToMountains`
+vista track. Calm music during a firefight means the override works. Normal combat
+music means it does not. Remove the three `BL4MusicProbe_9700_P.*` files from
+`Paks/` to revert.
 
 ## Resolved: containers can only override, never add
 
