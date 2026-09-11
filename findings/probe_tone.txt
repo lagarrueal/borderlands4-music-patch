@@ -3,14 +3,28 @@
   found as SoundWave: actual class = SoundWave
   >>> OVERRIDE WORKED - our asset replaced BL4's
 
-not resident yet - loading
+--- add retest: ProbeTone_9998_P at a NEW package path ---
+  not resident
+  >>> adding still fails even with a priority number
+
 class    = SoundWave
 duration = 4.0
 channels = 1
 rate     = 44100
 codec    = 2
-world    = /Game/Maps/WorldLevels/World_P.World_P:PersistentLevel.OakPlayerController_2147373732
-SpawnSound2D -> None
-component is None - engine declined to create one
-trying PlaySound2D as a fallback
-PlaySound2D returned without raising
+world    = /Game/Maps/WorldLevels/World_P.World_P:PersistentLevel.OakPlayerController_2147479259
+--- audio device ---
+  GetMaxAudioChannelCount = 0
+  GetAudioTimeSeconds     = 66.11919590458274
+  GetRealTimeSeconds      = 85.87863400578499
+  AreSubtitlesEnabled     = True
+  AreAnyListenersWithinRange = (False, {X: 0.0, Y: 0.0, Z: 0.0})   (False with a huge radius means no listener)
+  CreateSound2D -> None
+--- playback attempts ---
+  SpawnSound2D -> None
+  PlaySound2D returned
+  live AudioComponents now: 0
+
+VERDICT: no component could be created from a valid SoundWave.
+  -> BL4 almost certainly never initialises UE's native mixer,
+     because it runs Wwise instead. Check the channel count above.

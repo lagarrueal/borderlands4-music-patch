@@ -3,9 +3,10 @@
 Goal: give BL4 the ambient and combat music it lacks, ideally by importing BL2/BL3
 tracks.
 
-**Status: not shipping. Blocked on one unanswered question** — whether BL4
-initialises UE's native audio mixer at all. Everything else in the chain is built
-and proven. See *The open question* below.
+**Status: the original plan is dead.** BL4 does not initialise Unreal's native
+audio mixer, so custom `USoundWave`s cannot be played alongside the game's audio —
+however cleanly they cook, pack and load. The only remaining in-engine route is
+overriding BL4's own Wwise bank media. See *Answered: the mixer is off*.
 
 > Packaging rules, `.ncs` handling and safety live in the parent `../CLAUDE.md`.
 > This file covers only audio.
@@ -98,25 +99,39 @@ have been trusted.)
 **`SpawnSound2D` returns None** even given a valid, fully-loaded `SoundWave`.
 `PlaySound2D` returns without raising and produces nothing.
 
-## The open question
+## Answered: the mixer is off
 
-**Does BL4 initialise UE's native audio mixer at all?**
+**BL4 does not initialise UE's native audio mixer.** Measured directly.
 
 UE5's AudioMixer is compiled in — XAudio2 and WASAPI backends, the full submix
 effect chain, `xaudio2_9redist.dll` on disk — and the playback API is fully
 reflected (`AudioComponent` has `SetSound`/`Play`/`FadeIn`/`FadeOut`/`PlayQuantized`;
 `GameplayStatics` has 141 functions). But nothing has ever made a sound.
 
-`sdk_mods/probe_tone/` v1.5 answers it: it reads `GetMaxAudioChannelCount`,
-`GetAudioTimeSeconds`, `AreAnyListenersWithinRange`, and tries `CreateSound2D`,
-which allocates a component *without* playing. **This has not been run yet.**
+With a valid, fully-loaded `SoundWave` in hand (class=SoundWave, duration 4.0, 1ch,
+44100Hz, codec 2 = PCM):
 
-- Channel count 0 / `CreateSound2D` None → the mixer is off. The parallel-audio
-  plan dies, and the options narrow to overriding BL4's own Wwise bank media in the
-  53.6 GB legacy `.pak` side, or driving audio out-of-process.
-- Otherwise → something narrower is wrong and the plan survives.
+```
+GetMaxAudioChannelCount    = 0
+AreAnyListenersWithinRange = False   (with a 1e9 radius - no listener exists)
+CreateSound2D              -> None   (allocates WITHOUT playing; still fails)
+SpawnSound2D               -> None
+live AudioComponents        = 0
+```
 
-## Unresolved: can a container ADD a package, or only override?
+Zero channels, no listener, and not even a component can be allocated. Everything
+that was verified upstream of this — cook, retoc, mount, load, and the whole
+`AudioComponent` API — is unusable because there is no device underneath it.
+`GetAudioTimeSeconds` advancing is just the world audio clock and means nothing.
+
+**The only remaining in-engine route** is replacing `.wem` payloads inside BL4's own
+Wwise banks, in the 53.6 GB legacy `.pak` side. That fits how BL4 modding actually
+works (overrides, which are proven) and there are 91 cue slots to overwrite. You can
+only replace tracks, never add them, and the audio must fit the existing
+event/segment structure. FModel bundles vgmstream for decoding `.wem`; re-encoding
+needs community Wwise tooling.
+
+## Resolved: containers can only override, never add
 
 Two containers were built from the same cooked asset with the same retoc
 invocation, differing only in package name:
@@ -126,15 +141,16 @@ invocation, differing only in package name:
 | `ProbeTone_P` | `/Game/ProbeAudio/ProbeTone` (new) | never loadable |
 | `ZZHijack_9999_P` | `.../WPLayer_Mus_Ambiance_CTY` (existing) | **loaded, class = SoundWave** |
 
-That looked like "overrides work, adds do not" — but **the test is confounded**.
-Per `../CLAUDE.md` rule 3, a mod filename needs a priority number: `Name_9500_P`.
-`ProbeTone_P` **has no priority number**, so it may simply never have been mounted,
-while `ZZHijack_9999_P` was. The variable under test and the filename convention
-changed together.
+That first test was confounded — `ProbeTone_P` had no priority number, and per
+`../CLAUDE.md` a mod filename needs one or it loses to the base game. So the package
+name and the filename convention changed together.
 
-**Re-run before believing either conclusion**: rebuild the new-path container as
-`ProbeTone_9998_P` and see whether it loads. If it does, adding works fine and the
-whole "must ride in under an existing name" constraint evaporates.
+**Retested and confirmed.** Rebuilt as `ProbeTone_9998_P` — priority number present,
+identical cooked asset, identical retoc invocation, only the filename changed — with
+`ZZHijack_9999_P` left installed as a positive control. The hijack still loads; the
+new path still does not. The filename was not the cause.
+
+**Custom content must ship under the name of a package BL4 already has.**
 
 ## Rebuilding
 
