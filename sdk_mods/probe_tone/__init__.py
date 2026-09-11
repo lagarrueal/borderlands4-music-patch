@@ -7,7 +7,7 @@ from typing import Any
 import unrealsdk
 from mods_base import ButtonOption, CoopSupport, Game, build_mod, keybind
 
-__version__ = "1.5"
+__version__ = "1.6"
 __author__ = "alexa"
 
 MOD_ID = "probe_tone"
@@ -128,16 +128,42 @@ def play_tone() -> None:
             say("  package not resident at all - INCONCLUSIVE, see notes above")
         say("")
 
-        # 1. Is it already resident? The container may have been mounted and the
-        #    asset pulled in without us asking.
+        # 1. THE ADD RETEST.
+        #
+        #    The earlier "containers can override but cannot add" conclusion was
+        #    CONFOUNDED. The two containers differed in package name AND in
+        #    filename: ZZHijack_9999_P carried a priority number, ProbeTone_P did
+        #    not. Per the packaging rules, a mod filename needs one - without it
+        #    the pak parses to no priority and loses to the base game, so
+        #    ProbeTone_P may simply never have been mounted.
+        #
+        #    Now rebuilt as ProbeTone_9998_P: same cooked asset, same retoc
+        #    invocation, same container bytes, only the filename changed. With
+        #    ZZHijack_9999_P still installed as a positive control, this is a
+        #    clean A/B on the one variable that matters.
+        #
+        #      both load    -> adding works; the override result was about the
+        #                      filename all along, and there is no "must ride in
+        #                      under an existing name" constraint.
+        #      hijack only  -> adding genuinely fails. Custom content must be
+        #                      shipped under names BL4 already has.
+        #      neither      -> something changed since last run; do not conclude.
+        say("--- add retest: ProbeTone_9998_P at a NEW package path ---")
+        found_add = None
         for p in ASSET_PATHS[:2]:
             obj = _safe(lambda x=p: unrealsdk.find_object("SoundWave", x))
             if obj is not None:
-                say(f"already resident via find_object: {_path(obj)}")
-                _loaded = obj
+                found_add = obj
                 break
+        if found_add is not None:
+            say(f"  RESIDENT: {_path(found_add)}")
+            say("  >>> ADDING WORKS - the earlier conclusion was the filename")
+            if _loaded is None:
+                _loaded = found_add
         else:
-            say("not resident yet - loading")
+            say("  not resident")
+            say("  >>> adding still fails even with a priority number")
+        say("")
 
         # 2. load_package. Previously written off because it returned None for
         #    /Game/Maps/WorldLevels/World_P - but that package was ALREADY
