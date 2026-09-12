@@ -216,6 +216,40 @@ This is the mechanism behind "91 cues exist, the game plays a handful". It also
 means a remap mod (pointing zones at real switch values) is a genuinely separate
 fix from replacing audio.
 
+### The Wwise Opus container, reverse-engineered
+
+Every music `.wem` is the same shape, and almost every field is a constant. Across
+40 sampled files: 48 kHz, stereo, `fmt` tag `0x3041`, `fmt` chunk 36 bytes.
+
+```
+RIFF .... WAVE
+  fmt  36   wFormatTag=0x3041  nChannels=2  nSamplesPerSec=48000
+            nAvgBytesPerSec    nBlockAlign=0  wBitsPerSample=0
+            cbSize=18  frameSize=960  A=12546  totalSamples  seekCount
+            B=312  C=1  D=0
+  hash 16   (present on every file)
+  seek N*2  one u16 per Opus packet - its size in bytes
+  data      Opus packets, concatenated, no framing
+```
+
+Only **three** things vary: `totalSamples`, `seekCount`, and the seek/data pair.
+`seekCount == ceil(totalSamples/960) + 1`, and **the seek entries sum exactly to
+the data chunk size** — verified on several files, so the table is nothing but
+per-packet byte lengths and the packets carry no framing of their own. 960 samples
+is a plain 20 ms Opus frame at 48 kHz.
+
+Minimal layout is `fmt hash seek data` (33 of 40 files). `akd`, `cue` and `LIST`
+appear on a few and are not needed.
+
+So producing a `.wem` from arbitrary audio is: encode 48 kHz stereo Opus in 20 ms
+frames, strip the Ogg framing to get raw packets, write the packet sizes as the
+seek table, and fill in two numbers. **No Wwise install is required** — and
+`vgmstream-cli` decodes the result, so an encoder can be validated offline by
+round-tripping against the source WAV before the game is ever launched.
+
+Not yet checked: whether the 16-byte `hash` value matters at runtime or is only
+an authoring-time asset hash.
+
 ### Building an override
 
 `wwise/build_override.py` takes a spec naming cues or `.wem` ids and emits
