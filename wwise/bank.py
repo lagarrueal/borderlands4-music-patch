@@ -22,6 +22,12 @@ def sections(b):
         yield tag, o+8, sz
         o += 8 + sz
 
+def bank_version(b):
+    for tag, off, sz in sections(b):
+        if tag == "BKHD":
+            return struct.unpack_from("<I", b, off)[0]
+    return None
+
 def hirc(b):
     for tag, off, sz in sections(b):
         if tag != "HIRC": continue
@@ -53,8 +59,12 @@ def parse_music_node(pl):
     parent, _ = _node_base_parent(pl, 5)
     return parent
 
-def parse_track(pl):
-    """MusicTrack: sources, then clip playlist/automation, then NodeBaseParams."""
+def parse_track(pl, version=145):
+    """MusicTrack: sources, then clip playlist/automation, then NodeBaseParams.
+
+    AkTrackSrcInfo gained a u32 eventID at bank version 140, so BL3 (v132) and
+    BL4 (v145) do not share this layout.
+    """
     o = 4
     o += 1                              # uFlags
     nsrc, = struct.unpack_from("<I", pl, o); o += 4
@@ -70,7 +80,10 @@ def parse_track(pl):
     nplay, = struct.unpack_from("<I", pl, o); o += 4
     clips = []
     for _ in range(nplay):
-        tid, sid, eid = struct.unpack_from("<III", pl, o); o += 12  # eventID: v>=140
+        if version >= 140:
+            tid, sid, eid = struct.unpack_from("<III", pl, o); o += 12
+        else:
+            tid, sid = struct.unpack_from("<II", pl, o); o += 8
         at, tb, te, dur = struct.unpack_from("<dddd", pl, o); o += 32
         clips.append((sid, at, dur))
     if nplay:
