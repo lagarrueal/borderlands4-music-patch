@@ -6,6 +6,8 @@ spec.json is either
   {"replace": {"<wem id>": "<path to replacement .wem>", ...}}
 or, to point whole cues at one file,
   {"cues": {"mus_combat_type:<0> + mus_biome:grasslands": "<path>.wem"}}
+and optionally any other loose file to override, keyed by its path inside the pak,
+  {"files": {"OakGame/Content/uiresources/.../x.css": "<local path>"}}
 
 Replacement files must be real .wem. BL4 ships only Wwise Vorbis (0xffff) and
 Wwise Opus (0x3041); reusing one of the game's own music .wem is the only
@@ -44,7 +46,8 @@ def resolve(spec):
 
 def build(spec, name, outdir):
     mapping = resolve(spec)
-    if not mapping: raise SystemExit("spec selected no files")
+    extra = spec.get("files", {})
+    if not mapping and not extra: raise SystemExit("spec selected no files")
     stage = os.path.join(outdir, "stage")
     shutil.rmtree(stage, ignore_errors=True)
     media = os.path.join(stage, MEDIA)
@@ -56,6 +59,10 @@ def build(spec, name, outdir):
             raise SystemExit(f"{src} is not a RIFF .wem")
         fmts[f] = fmts.get(f, 0) + 1
         shutil.copyfile(src, os.path.join(media, f"{wid}.wem"))
+    for rel, src in extra.items():
+        dst = os.path.join(stage, rel.replace("/", os.sep))
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        shutil.copyfile(src, dst)
     os.makedirs(outdir, exist_ok=True)
     pak = os.path.join(outdir, name + ".pak")
     subprocess.run([config.REPAK, "pack", "--version", "V11",
@@ -80,6 +87,8 @@ if __name__ == "__main__":
     pak, n, fmts = build(spec, name, outdir)
     NAMES = {0xffff: "Wwise Vorbis", 0x3041: "Wwise Opus"}
     print(f"{n} .wem replaced  ({', '.join(f'{NAMES.get(k, hex(k))}: {v}' for k, v in fmts.items())})")
+    for rel in spec.get("files", {}):
+        print(f"  + {rel}")
     for ext in ("pak", "utoc", "ucas"):
         p = os.path.join(outdir, f"{name}.{ext}")
         print(f"  {os.path.basename(p):<32} {os.path.getsize(p):>12,} B")
