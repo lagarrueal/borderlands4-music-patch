@@ -21,3 +21,8 @@ DATA = os.environ.get("BL4_AUDIO_DATA",
 def data(*parts):
     os.makedirs(DATA, exist_ok=True)
     return os.path.join(DATA, *parts)
+
+FFMPEG = os.path.expandvars(
+    r"%LOCALAPPDATA%\Microsoft\WinGet\Packages"
+    r"\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe"
+    r"\ffmpeg-9.0.1-full_build\bin\ffmpeg.exe")
