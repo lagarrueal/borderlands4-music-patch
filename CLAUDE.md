@@ -320,15 +320,23 @@ cooked `.ubulk` should be exactly `sample_rate * seconds * 2` bytes.
 
 ## The SDK mods
 
-| mod | keys | what it does |
+Only one is still live. The other three answered their question and were
+uninstalled from the game; they stay here because their findings are recorded
+above and re-running them is the only way to re-check those.
+
+| mod | keys | status |
 |---|---|---|
-| `audio_probe/` | F8, F9 | dumps the music system and sweeps for load routes |
-| `music_remap/` | F4, F5, F6, F12 | rewrites zone→switch mappings; F6 cycles contrasting cues |
-| `music_watch/` | F2, F3 | hooks audio calls; F2 toggles `log_all_calls` (238 MB in seconds) |
-| `probe_tone/` | F1, F11 | loads the cooked tone and tries every playback route |
+| `music_remap/` | F4, F5, F6, F12 | **live, and now the interesting one** — rewrites zone→switch mappings. Since the zone groups have no `default` branch, pointing zones at real switch values is what would turn BL4's zone music *on*; it is the companion to replacing audio, not a rival to it |
+| `audio_probe/` | F8, F9 | retired — dumped the music system and swept for load routes. There are none |
+| `music_watch/` | F2, F3 | retired — hooked audio calls and proved none ever fire (F2 toggles `log_all_calls`, 238 MB in seconds) |
+| `probe_tone/` | F1, F11 | retired — tried every playback route for a cooked tone. The mixer is off |
 
 Copy into `<game>/sdk_mods/`. Mods load **disabled** — enable in the `mods` console
 menu (F10) or the keybinds do nothing. `ButtonOption.on_press` is passed the option
 object, so callbacks must take one argument.
 
 Raw probe output is in `findings/`.
+
+`cook/` and `build/` likewise belong to the dead UE route. They are kept only as
+the record of a pipeline that provably works up to the point where BL4 has no
+audio device to play into; nothing in the Wwise route uses them.
