@@ -228,12 +228,40 @@ python wwise/map_cues.py                         # cue -> .wem map
 python wwise/build_override.py probe_combat_swap.json BL4MusicProbe_9700_P build
 ```
 
-**Untested as of this writing:** whether the game actually reads an overridden
-`.wem`. `BL4MusicProbe_9700_P` is installed to answer exactly that — it points all
-open-world biome combat music (38 files) at the calm `Mnt_WelcomeToMountains`
-vista track. Calm music during a firefight means the override works. Normal combat
-music means it does not. Remove the three `BL4MusicProbe_9700_P.*` files from
-`Paks/` to revert.
+### Proven: the `.wem` override works
+
+A probe pak carrying 1612 replaced music files **and** a `main_menu_button.css`
+override turned the main-menu text magenta *and* made the in-game music buzz. The
+CSS was the positive control: magenta proves the pak mounted and that loose-file
+overrides resolve, and audible corruption proves Wwise read the replaced `.wem`
+rather than BL4's. **Always ship a positive control in a diagnostic pak** — without
+it, "I heard nothing" cannot be told apart from "the pak never mounted", and that
+ambiguity already cost one inconclusive test.
+
+There are **no logs to fall back on**: BL4 is a shipping build with file logging
+disabled. Nothing is written to the game folder, `%LOCALAPPDATA%`, or
+`Documents\My Games\Borderlands 4\Saved\Logs` (crash-reporter logs only). NTFS
+last-access times are enabled but throttled to roughly hourly, so they cannot
+show whether a given launch read a given pak. Diagnostics have to be built *into*
+the mod.
+
+### A replacement must be at least as long as the segment declares
+
+Each `MusicTrack` clip carries `fSrcDuration`, and Wwise's music engine is
+sample-accurate. Point a source at a file shorter than its segment expects and
+playback runs past end of file — that is the buzzing, not a codec problem.
+
+Declared durations across the 1606 sources: min 6.7 s, median 57.2 s, max 425 s.
+A single 55 s file used for everything is short for **53%** of them.
+
+Not the cause, checked and ruled out: **no prefetch is embedded in the banks.**
+`uInMemoryMediaSize` is declared per source (984–45,182 B), but those head bytes
+appear in none of the 29 banks, so nothing splices bank audio onto the streamed
+file.
+
+Picking the cheapest qualifying track per target made the pak *smaller* as well as
+correct — 183 MB against 594 MB. `wwise/probe_duration_safe.json` is that build.
+Remove the three `BL4MusicProbe_9700_P.*` files from `Paks/` to revert.
 
 ## Resolved: containers can only override, never add
 
