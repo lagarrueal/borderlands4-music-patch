@@ -259,8 +259,23 @@ Not the cause, checked and ruled out: **no prefetch is embedded in the banks.**
 appear in none of the 29 banks, so nothing splices bank audio onto the streamed
 file.
 
-Picking the cheapest qualifying track per target made the pak *smaller* as well as
-correct — 183 MB against 594 MB. `wwise/probe_duration_safe.json` is that build.
+### And it must actually contain audio
+
+**BL4 ships silent filler `.wem`.** 21 of the 1606 music sources encode to about
+**2 kbps** — Opus compressing pure silence. They are, by a wide margin, the
+smallest files that are long enough for anything, so "cheapest track at least as
+long as needed" selects them for nearly every target. That is what made combat
+music *disappear* in probe v3: the duration fix worked, the buzzing stopped, and
+every slot was pointed at digital silence. Measured: −240 dB RMS and peak.
+
+Select on **content as well as length** — `wwise/pick_replacements.py` enforces
+both, requiring ≥ 60 kbps. Bitrate is a reliable proxy here: 1119 of 1606 sources
+sit in the normal 60–140 kbps band, and anything under ~20 kbps is a sparse pad
+rather than music.
+
+The general lesson: optimising a probe for pak size selects for silence, which is
+indistinguishable from the mod not working. Optimise for *legibility* instead.
+
 Remove the three `BL4MusicProbe_9700_P.*` files from `Paks/` to revert.
 
 ## Resolved: containers can only override, never add
