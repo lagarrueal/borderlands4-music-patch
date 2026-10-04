@@ -1,14 +1,24 @@
+
+# UE project working dirs, if the project is ever moved in-tree
 # build output - rebuildable from cook/ (see CLAUDE.md)
-build/
+# generated - rebuild with wwise/index_audio.py and wwise/map_cues.py
+# generated test fixture - make it with cook/make_wav.py
 *.pak
 *.ucas
 *.utoc
-
-# generated test fixture - make it with cook/make_wav.py
-cook/ProbeTone.wav
-
-# UE project working dirs, if the project is ever moved in-tree
-Saved/
-Intermediate/
 DerivedDataCache/
+Intermediate/
+Saved/
 __pycache__/
+build/
+cook/ProbeTone.wav
+wwise/data/
+# generated previews - rebuild with wwise/listen.py (the page itself is tracked)
+listen/bl2/
+listen/bl3/
+listen/bl4/
+listen/tracks.js
+wwise/tools/ue4json/bin/
+wwise/tools/ue4json/obj/
+listen/bl4mod/
+listen/mod.js

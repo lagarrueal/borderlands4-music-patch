@@ -1,0 +1,9 @@
+{
+ "_note": "Probe: open-world biome combat music -> the calm Mnt_WelcomeToMountains vista cue. Unmistakable if it works.",
+ "cues": {
+  "mus_combat_type:<0> + mus_biome:city": "data/wem/636658451.wem",
+  "mus_combat_type:<0> + mus_biome:grasslands": "data/wem/636658451.wem",
+  "mus_combat_type:<0> + mus_biome:mountain": "data/wem/636658451.wem",
+  "mus_combat_type:<0> + mus_biome:shatterlands": "data/wem/636658451.wem"
+ }
+}
