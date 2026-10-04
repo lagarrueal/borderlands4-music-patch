@@ -13,3 +13,12 @@ __pycache__/
 build/
 cook/ProbeTone.wav
 wwise/data/
+# generated previews - rebuild with wwise/listen.py (the page itself is tracked)
+listen/bl2/
+listen/bl3/
+listen/bl4/
+listen/tracks.js
+wwise/tools/ue4json/bin/
+wwise/tools/ue4json/obj/
+listen/bl4mod/
+listen/mod.js
