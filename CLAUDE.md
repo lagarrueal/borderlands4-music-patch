@@ -14,6 +14,248 @@ no bank surgery at all. See *The Wwise side*.
 > Packaging rules, `.ncs` handling and safety live in the parent `../CLAUDE.md`.
 > This file covers only audio.
 
+## Work offline first (2026-10-01)
+
+Do not learn the music system by launching the game. Everything below can be
+seen and heard from disk.
+
+- **wwiser** (`../tools/wwiser.pyz`, bnnm, v20260808) parses BL4's v145 banks
+  with zero errors. `-d txt` dumps every field **with its byte offset**, which
+  is what in-place bank patching needs. `-g` writes `.txtp` files that
+  vgmstream (FModel's copy) plays. That includes layers, playlists, random
+  intros and loops, so any cue can be heard as Wwise sequences it. Use `-te`
+  for short names (full titles go in `!tags.m3u`) and `-gd` when every
+  path matters, because by default identical paths are kept only once.
+  `-gw` is relative to the txtp folder.
+- **Names come from the game.** NCS tables `wwise_switches`, `wwise_states`
+  and `audio_event` list every Wwise name, which gives
+  `data/bl4/wwnames.txt` (115k names). With it, 163 of 184 cues are named; the
+  other 21 are wildcard branches.
+- **The music logic is NCS too.** `gbxmusic` (`Music_Oak2_Common` in chunk 4,
+  per-region defs in chunk 6) sets the threat that starts combat music:
+  light 9/4 (enter/exit), heavy 26/20, critical 15/7.5. Rank weights: chump
+  0.5, elite 1.5, badass 3, boss 10. Lowering the light threshold is a
+  small NCS edit, separate from any audio work.
+- **What a BL4 combat cue is:** a random 4-7 s intro hit, cut from a long
+  file by trims, then a 64 s loop of up to 5 stacked layers. 59% of combat
+  segments play 3 or more tracks at once. So a replacement puts the new
+  music on one layer and silence on the others, and the loop length
+  (segment duration and markers, f64 fields) is patched in the bank.
+
+### Source games
+
+| game | audio | names | music logic |
+|---|---|---|---|
+| BL2 | AKPK `.pck`, `wwise/akpk.py` (BL2's header has the 4th "externals" size field) | bank names from STID chunks (`Ice_P_SFX`...); `music_states` = `music_ambience` / `music_combat` / `music_boss_0N`, recovered by FNV brute force | one switch per map |
+| BL3 | `pakchunk2` + patches, AES key from the BLCM wiki, unpack oldest to newest | asset names in the pak index: `WwiseState_<group>_<value>`, `WwiseBank_<bank>`, `WE_<event>`; story-DLC banks recovered by brute force (`Mus_Dandelion_*`, `Mus_Geranium_*`, `Mus_Alisma_*`, GL&T events in bank `Music`) | `OakMusicData` assets give each `Mus_System_Sections` value a threat range; parts play in order |
+| Wonderlands | not installed (only saves in its folder) | | |
+
+`wwise/tools/ue4json` dumps BL3 UE4 assets to JSON (UAssetAPI, tagged
+properties, no usmap); `data/bl3/sections.json` holds the threat ranges.
+
+### The listening library
+
+`python wwise/listen.py [bl2] [bl3] [bl4]` renders one MP3 per area and state
+into `listen/`, gain-matched to -16 LUFS. BL3 sections are rendered as suites,
+with the parts back to back. Silent placeholders and stingers are dropped.
+That gives 558 tracks (22.8 h), rendered in about two minutes. The page is
+`listen/index.html`. Serve it with `listen/serve.py`, which supports Range
+requests so seeking works; it is also the `music-picker` entry in the
+game folder's `.claude/launch.json`. Picks live in localStorage; "Copy for
+Claude" puts them on the clipboard.
+
+## Building a music mod (`wwise/musicmod.py`)
+
+`python wwise/musicmod.py mods/blmix.json [--install]` puts library tracks into
+BL4 slots. The spec lists combat containers (per-biome or Vaults; types basic
+and critical) and zone containers (Fadefields `943367025`, Terminus Range
+`244616023`), with track ids as `listen/tracks.js` prints them. First mod:
+`BLMusicMix_9700_P`, 2026-10-01. v1 and v2 were heard in game, but most new
+tracks stayed silent; see *The preload rule* below, fixed in v3. v3 is
+confirmed in game: Vaults, all ripper areas and Fadefields combat play. Its
+exploration was still silent (the threat-gated riser, see v2 below); v4
+fixes that.
+
+### Combat drop-outs (v5, 2026-10-02)
+
+The user report was that combat music faded out while enemies were still
+around but a bit far, then restarted from the top about 5 s later. Two causes,
+two fixes:
+
+- **The game ends combat too early.** The threat thresholds are NCS
+  (`Music_Oak2_Common`, `gbxmusic4.ncs`, only in `pakchunk4-Windows_0_P`). All
+  23 region defs inherit them; only Tuba overrides heavy and critical.
+  - Ranges (enter/exit): light 9/4 (this one ends combat music), heavy 26/20,
+    critical 15/7.5.
+  - An enemy's threat falls with distance down to 0.125
+    (`threatscaleatmaxdistance`).
+  - Other fields from the exe's reflection strings, not set in NCS:
+    `ThreatScaleDistance`, `ThreatCutoffDistance`,
+    `GameplayMusicFadeTimeSeconds`.
+  - `wwise/musicncs.py` lowers the light exit (spec `threat.light_exit`, now
+    1.0) and packs the file at `Engine/Content/_NCS/`. It carves the newest
+    copy by raw bytes, finds the cell by matching the shown (enter, exit) pair
+    in the NCS_TRACE output, repoints it with `ncs_multipatch.py`, requires a
+    one-value JSON diff and writes it stored.
+  - **The mod now carries an NCS file**: rebuild it after any patch that
+    touches pakchunk4, or it reverts that file.
+- **The music restarted.** Every rule that starts a combat track said "start
+  of playlist, entry marker". The spec's `resume` sets the "any -> any" and
+  "nothing -> any" rules of all 11 region containers and the Vaults to
+  `eEntryType` 4, LastExitTime ("Sync to: Last exit position"), with a 300 ms
+  fade-in. That is what BL4's own TOP ambient container uses (6 s fade-in
+  there). The exploration track's "any -> riser" rule resumes too.
+- Not yet heard in game.
+
+### The preload rule (v3, 2026-10-01)
+
+**Every bank source declares `uInMemoryMediaSize` = its file's header (all
+bytes before the audio) + its first 6 Opus packets.** That holds for all
+2,839 Opus music sources in the shipped maingame bank, without exception.
+The game preloads that many bytes and parses the header (with the whole seek
+table, one u16 per 20 ms) from them.
+
+- v1 and v2 repointed sources to new files but kept the old files' sizes. A
+  2-minute track has a 12.6 KB header and the 8:51 Wetlands 53 KB, while most
+  combat stems declare 6-9 KB. Every track whose header did not fit was silent
+  in game. It still rendered fine offline, because vgmstream ignores this
+  field.
+- In v2 that silenced Ripper B critical, Ripper C and D, Vaults critical and
+  all exploration. Fadefields combat, Ripper B basic and Vaults basic played,
+  because their media ids carried 27 KB sizes from other sources.
+- The game keys the preload by media id: v1's Ripper B played through a
+  host source declaring 7 KB, because other sources of the same id declared
+  27 KB. So **every source that references a written id gets the new size**,
+  including silenced stems and unreachable leftovers.
+- `wemopus.prefetch_size()` computes the size. `musicmod.py` checks the rule
+  on the shipped bank first (a BL4 patch that changes it stops the build),
+  then patches the sizes and re-checks every music source of the result.
+- Hedge: media ids are chosen so that their *original* declared size also
+  holds the new header where possible. The game's paks contain no media
+  table besides the banks, so this should not matter.
+
+Everything is patched **in place** in the maingame bank `1731745708.bnk`
+(207 fields; no byte moves; wwiser re-reads it as the same objects):
+
+- **Combat playlist**: random intro items -> the loop segment (u32 SegmentID).
+  Loop segment: `fDuration` and the entry/exit markers (`43573010`/`1539036744`)
+  are set to the new track. The host stem's source -> the new media, with
+  playAt/trims 0 and srcDuration = the track. Other stems -> one silence file.
+- **Falling leaf -> the combat playlist.** The per-biome container has
+  `bIsContinuePlayback=1`, so the track carries on through the cool-down. Then
+  "any -> nothing" fades it at the next bar over 2 s. Combat <-> falling and
+  basic <-> critical switch at NextGrid (1 s) with a 400 ms fade, not at the
+  exit cue, so long tracks do not make music overstay a fight.
+- **Zones**: every leaf of the zone container -> one host playlist.
+- **Host stem** = clean (one clip, no automation, RTPC or state chunk) and
+  the **loudest** (Volume + MakeUpGain props). BL4 balances stems down to
+  -7 dB. A quiet host forced Vaults critical through a limiter, 4 dB short.
+- **Media ids**: only ids whose every user, in every bank
+  (`data/bl4/media_usage.json`), is unreachable or repointed. In one biome,
+  combat, critical and falling share 5 long stem files (different windows),
+  so stems can never simply be overwritten.
+- **Sources**: rendered via a copy of the TXTP with `commands = #v 0.5`.
+  wwiser's auto +16-18 dB clips dense BL3 layer stacks in vgmstream's 16-bit
+  output. All picks were 48 kHz with loop = whole stream, so cuts are
+  sample-exact (the script refuses otherwise). `wemopus.py` now writes the
+  exact sample count (last Ogg granule minus pre-skip), like BL4's own files.
+- **Loudness**: each patched playlist is rendered at `-gv 1.0` and compared
+  with the original. Up to 4 passes; the result is within 0.2 dB on all 8 slots.
+
+**Verification**: TXTP comparison keyed by event + gamesyncs, with `-gd` and
+playback lines only. 108 paths changed, all inside the picked slots; no
+surviving path references the overwritten media. The only side effect is that
+the Murder Mystery "body drop" stinger is gone (it hung off that zone's
+playlist). Watch for **dedupe artefacts**: with plain `-g`, paths appear and
+vanish when duplicate relationships shift. `underwaterfacility` (CTY) shares
+music with zones in GR, MNT and SH.
+
+The preview for "Terminus zones" first rendered the **Mountains Fortress**
+(`Mus_Ambient_MNT_Fortress`, `mnt_fortress_a-d`, its own container). Restrict
+zone renders to `Mus_WorldP_DefaultGameplay`.
+
+**Overriding the whole maingame bank** means a BL4 patch that changes it gets
+reverted by our stale copy. After any update that touches `pakchunk2`:
+re-run `index_audio.py`, extract banks, regenerate `data/bl4/txtp`, rebuild
+`media_usage.json`, then re-run musicmod.
+
+Failure signatures to expect in game: several tracks stacked or garbled means
+the media loaded but not the bank; nothing changes at all means the pak never
+mounted.
+
+### v2 (2026-10-01): exploration everywhere, all ripper areas
+
+The v1 Vaults music was **confirmed in game**: the patched maingame bank
+loads, not just the media.
+
+**Exploration between named places cannot come from the zone switches.**
+- Outside a POI, each ambient layer sets `<zone group>:default`, and the top
+  ambient tree has no music for all-default.
+- The tree checks `gr` before `mnt`, `sh` and `cty`, and switches keep their
+  value after you leave a layer's painted area. So any "play something on
+  default" would leak into other regions.
+- The paint-layer assets can't be edited structurally either. UAssetAPI
+  reads `OakWorldPainterLayer_MusicZone` as a RawExport, because its class
+  is not in the usmap.
+
+**The region-safe lever is `mus_biome`.**
+- The combat container `815672541` plays in every state, everywhere the
+  WorldPZones layer paints a biome. Per-biome containers hold leaves for
+  basic or critical x combat or falling, plus a wildcard-type leaf for
+  `rising`.
+- Re-keying that rising leaf to 0 ("any state") makes ambient and rising play
+  its playlist. That playlist, the riser, becomes the exploration track. Its
+  clip fade curves are flattened to unity in place (`AkRTPCGraphPoint.To`).
+- This relies on Wwise's best-match fallback to the wildcard combat type,
+  which BL4's own rising leaf already depends on. wwiser resolves trees the
+  same way: exact key first, then the wildcard, with backtracking.
+- **The riser is threat-gated (found after v3: silent everywhere in the
+  Fadefields).** Each riser playlist carries three `Music_Threat` curves:
+  volume, LPF and HPF. At zero threat the volume is -1.0, which is silent:
+  dB-scaled curves (`eScaling` 2) are stored normalized to -1..1, as all
+  1,568 such curves in the bank show. It also plays on its own bus
+  `3406085544` (-2 dB, speaker panning for the build-up). v4 sets those
+  curves to neutral (0) and sends the playlist to `1443811164`, the bus BL4's
+  zone music plays on (the bus of `level_from`).
+- Bus map (Init bank `1355168291`), under Music:
+  - `1533192012`: TOP combat container, no curves.
+  - `1443811164`: zone music (TOP ambient).
+  - `3733692670`: the risers, ripperD and Vaults combat.
+
+  The last two both follow RTPC `2476962059`, a global music gate (probably
+  `Mus_MuteSystemMusic`). It is open in play, since zone music and Vaults
+  combat both play. **Offline renders apply neither RTPCs nor buses**, so
+  check those by reading the bank.
+
+**Avoiding double playback.**
+- Non-faction zones of the region's zone container now play nothing
+  (audioNodeId 0), because the biome track already covers them.
+- Order and Ripper zones keep the track. Their biome is a faction variant
+  (`orderA-C`, `ripperA-D`), which has no exploration leaf.
+
+**All fortresses force their biome** through a `GbxMusicAction_SetSwitch` in
+gbxmusic6. Fadefields, Mountains and UpperCity fortresses set `orderC`;
+Shatterlands sets `ripperD`. The biome exploration track therefore never plays
+on top of a fortress's own music.
+
+**Ripper A-D are generic variants painted across regions**, so v2 puts
+Windshear Waste on all four.
+
+**Top combat container rule**: any->any was ExitMarker with no fades, so a
+biome change waited for the playing loop to end (up to 8:51 now). It is now
+NextBar with 2 s fades.
+
+**Verification is built in** (`verify_paths`):
+- `-gd` TXTPs, keyed by event + gamesyncs.
+- Each changed path must pass through a patched playlist, a bypassed
+  falling playlist or a zone container. Whole biome containers don't count,
+  because their untouched leaves must stay identical.
+- No path outside those may play an overwritten media id.
+- Known losses must be listed in the spec's `accept_losing`.
+- v2: 137 of 681 paths changed, 0 stray, 0 leaks.
+
+`wwise/modpage.py` renders the after-previews and writes `listen/mod.js`.
+
 ## How BL4 chooses music
 
 `OakWorldPainterLayer_MusicZone` holds `MusicZones[]`. Each entry is
@@ -291,7 +533,9 @@ A single 55 s file used for everything is short for **53%** of them.
 Not the cause, checked and ruled out: **no prefetch is embedded in the banks.**
 `uInMemoryMediaSize` is declared per source (984–45,182 B), but those head bytes
 appear in none of the 29 banks, so nothing splices bank audio onto the streamed
-file.
+file. The declared size still matters, because the game preloads that many
+bytes of the loose file and needs the whole header in them. See *The preload
+rule*.
 
 ### And it must actually contain audio
 

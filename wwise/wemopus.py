@@ -2,7 +2,8 @@
 
 Container (see ../CLAUDE.md): fmt / hash / seek / data, where the seek chunk is
 one u16 per Opus packet giving its byte length, and data is those packets
-concatenated with no framing of their own.
+concatenated with no framing of their own. A bank source that streams a file
+must declare its prefetch_size().
 
   python wemopus.py encode <input audio> <out.wem> [bitrate_kbps]
   python wemopus.py verify <a.wem> [b.wem ...]
@@ -21,11 +22,13 @@ def _ffmpeg():
     return p
 
 def ogg_packets(data):
-    """Yield packets from an Ogg stream, dropping the two Opus header packets."""
-    o, packets, buf = 0, [], b""
+    """Audio packets of an Ogg Opus stream (header packets dropped), plus the
+    stream's pre-skip and the granule position of its last page."""
+    o, packets, buf, granule = 0, [], b"", 0
     while o < len(data):
         if data[o:o+4] != b"OggS":
             raise ValueError(f"bad Ogg page at {o}")
+        granule = struct.unpack_from("<q", data, o + 6)[0]
         nseg = data[o+26]
         segs = data[o+27:o+27+nseg]
         body = o + 27 + nseg
@@ -35,22 +38,30 @@ def ogg_packets(data):
                 packets.append(buf); buf = b""
         o = body
     if buf: packets.append(buf)
-    return [p for p in packets
-            if not (p[:8] == b"OpusHead" or p[:8] == b"OpusTags")]
+    head = next((p for p in packets if p[:8] == b"OpusHead"), None)
+    preskip = struct.unpack_from("<H", head, 10)[0] if head else CONST_B
+    audio = [p for p in packets
+             if not (p[:8] == b"OpusHead" or p[:8] == b"OpusTags")]
+    return audio, preskip, granule
 
-def encode(src, dst, kbps=96):
-    """Any audio ffmpeg reads -> a BL4-compatible Wwise Opus .wem."""
+def encode(src, dst, kbps=96, af=None):
+    """Any audio ffmpeg reads -> a BL4-compatible Wwise Opus .wem.
+
+    totalSamples is the exact decoded length (last granule minus pre-skip), as
+    in BL4's own files. It becomes the clip length when a music segment loops
+    the file, so a frame-padded count would leave a gap in the loop.
+    """
     ff = _ffmpeg()
     tmp = tempfile.mktemp(suffix=".opus")
     try:
         subprocess.run(
-            [ff, "-y", "-v", "error", "-i", src,
-             "-ac", str(CHANNELS), "-ar", str(RATE),
+            [ff, "-y", "-v", "error", "-i", src] + (["-af", af] if af else []) +
+            ["-ac", str(CHANNELS), "-ar", str(RATE),
              "-c:a", "libopus", "-b:a", f"{kbps}k",
              "-frame_duration", "20", "-application", "audio",
              "-vn", "-map_metadata", "-1", tmp],
             check=True)
-        packets = ogg_packets(open(tmp, "rb").read())
+        packets, preskip, granule = ogg_packets(open(tmp, "rb").read())
     finally:
         if os.path.exists(tmp): os.remove(tmp)
     if not packets: raise SystemExit("no Opus packets produced")
@@ -59,12 +70,14 @@ def encode(src, dst, kbps=96):
             raise SystemExit("packet exceeds the u16 seek entry")
     data = b"".join(packets)
     seek = b"".join(struct.pack("<H", len(p)) for p in packets)
-    total = len(packets) * FRAME
+    total = granule - preskip
+    if not 0 < total <= len(packets) * FRAME:
+        total = len(packets) * FRAME - preskip
     secs = total / RATE
     fmt = struct.pack("<HHIIHH", FMT_TAG, CHANNELS, RATE,
                       int(len(data)/secs), 0, 0) + \
           struct.pack("<HHIII", 18, FRAME, CONST_A, total, len(packets)) + \
-          struct.pack("<HBB", CONST_B, CONST_C, CONST_D)
+          struct.pack("<HBB", preskip, CONST_C, CONST_D)
     assert len(fmt) == 36, len(fmt)
     body = b"fmt " + struct.pack("<I", len(fmt)) + fmt \
          + b"hash" + struct.pack("<I", 16) + b"\0"*16 \
@@ -74,6 +87,35 @@ def encode(src, dst, kbps=96):
     open(dst, "wb").write(out)
     return {"packets": len(packets), "samples": total, "seconds": secs,
             "bytes": len(out)}
+
+PREFETCH_PACKETS = 6
+
+def prefetch_size(wem):
+    """The in-memory size a BL4 bank declares for a streamed .wem: the header
+    (everything before the audio) plus the first 6 Opus packets. All 2,839
+    music sources of the shipped maingame bank follow this exactly.
+
+    The game preloads that many bytes and parses the header from them, so a
+    bank source pointed at a new file must declare the new file's size. A
+    longer track has a bigger seek table, and a stale smaller size leaves
+    the track silent in game while every offline render still plays it.
+    """
+    with open(wem, "rb") as fh:
+        fh.seek(12)
+        seek = None
+        while True:
+            head = fh.read(8)
+            if len(head) < 8:
+                raise ValueError(f"{wem}: no data chunk")
+            tag, size = head[:4], struct.unpack("<I", head[4:])[0]
+            if tag == b"data":
+                if seek is None:
+                    raise ValueError(f"{wem}: no seek chunk before the data")
+                return fh.tell() + sum(seek)
+            start = fh.tell()
+            if tag == b"seek":
+                seek = struct.unpack(f"<{PREFETCH_PACKETS}H", fh.read(2 * PREFETCH_PACKETS))
+            fh.seek(start + size + (size & 1))
 
 def probe(wem):
     """vgmstream's view of a .wem - the independent check that it is valid."""

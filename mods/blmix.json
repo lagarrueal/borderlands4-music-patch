@@ -1,0 +1,114 @@
+{
+  "name": "BLMusicMix_9700_P",
+  "_note": "Built from the picker shortlist of 2026-10-01; v2 added ripper A-D and open-world exploration, v5 (2026-10-02) the combat resume and the lower threat exit. Track ids are listen/tracks.js ids.",
+  "combat": [
+    {
+      "container": 513039619,
+      "slot": "Fadefields",
+      "page": "grasslands",
+      "basic": "bl2/PandoraPark_P/Combat",
+      "critical": "bl2/PandoraPark_P/Boss_1"
+    },
+    {
+      "container": 231439406,
+      "slot": "Ripper areas A",
+      "page": "rippera",
+      "basic": "bl2/Glacial_P/Combat",
+      "critical": "bl2/Glacial_P/Boss_1"
+    },
+    {
+      "container": 644897255,
+      "slot": "Ripper areas B",
+      "page": "ripperb",
+      "basic": "bl2/Glacial_P/Combat",
+      "critical": "bl2/Glacial_P/Boss_1"
+    },
+    {
+      "container": 636539655,
+      "slot": "Ripper areas C",
+      "page": "ripperc",
+      "basic": "bl2/Glacial_P/Combat",
+      "critical": "bl2/Glacial_P/Boss_1"
+    },
+    {
+      "container": 667875817,
+      "slot": "Ripper areas D",
+      "page": "ripperd",
+      "basic": "bl2/Glacial_P/Combat",
+      "critical": "bl2/Glacial_P/Boss_1"
+    },
+    {
+      "container": 777721367,
+      "slot": "Vaults",
+      "page": "Mus_Ambient_Vaults",
+      "basic": "bl3/Mus_Motorcade_Interior_Start/s01",
+      "critical": "bl3/Mus_Motorcade_Interior_Start/s02"
+    }
+  ],
+  "biome_ambient": [
+    {
+      "container": 513039619,
+      "slot": "Fadefields exploration (open world)",
+      "page": "grasslands_world",
+      "track": "bl3/Mus_Wetlands_Play/s01",
+      "level_from": 943367025
+    },
+    {
+      "container": 455259629,
+      "slot": "Terminus Range exploration (open world)",
+      "page": "mountain_world",
+      "track": "bl2/Ice_P/Exploration",
+      "level_from": 244616023
+    }
+  ],
+  "zones": [
+    {
+      "container": 943367025,
+      "slot": "Fadefields exploration (Order and Ripper places)",
+      "page": "gr_",
+      "track": "bl3/Mus_Wetlands_Play/s01",
+      "keep": [
+        "order",
+        "ripper"
+      ]
+    },
+    {
+      "container": 244616023,
+      "slot": "Terminus Range exploration (Order and Ripper places)",
+      "page": "mnt_",
+      "track": "bl2/Ice_P/Exploration",
+      "keep": [
+        "order",
+        "ripper"
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "container": 815672541,
+      "src": [
+        -1
+      ],
+      "dst": [
+        -1
+      ],
+      "sync": "NextBar",
+      "fade_out_ms": 2000,
+      "fade_in_ms": 2000,
+      "_why": "region (biome) changes waited for the playing loop's exit cue - up to 8:51 with the exploration tracks"
+    }
+  ],
+  "threat": {
+    "light_exit": 1.0,
+    "_why": "combat music ended below threat 4 (enters at 9); enemies spread a bit too far dropped below it mid-fight"
+  },
+  "resume": {
+    "containers": [513039619, 455259629, 231439406, 644897255, 636539655, 667875817,
+                   379611222, 584236554, 488068970, 139142285, 81227949, 777721367],
+    "fade_in_ms": 300,
+    "_why": "a track that comes back after a drop-out continued from where it stopped, not from its start; all 11 region combat containers and the Vaults"
+  },
+  "accept_losing": {
+    "stinger-81890": "The Murder Mystery 'body drop' sting hangs off that Fadefields zone's own playlist, which no longer plays."
+  }
+}
